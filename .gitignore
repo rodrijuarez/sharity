@@ -1,0 +1,6 @@
+web/target
+core/target
+.settings
+.project
+.checkstyle
+*.orig
