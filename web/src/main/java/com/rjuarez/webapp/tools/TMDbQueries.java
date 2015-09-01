@@ -20,6 +20,7 @@
 package com.rjuarez.webapp.tools;
 
 import java.util.EnumSet;
+
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -27,7 +28,7 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author Stuart
  */
-public enum Param {
+public enum TMDbQueries {
 
     ADULT("include_adult="),
     API_KEY("api_key="),
@@ -84,7 +85,7 @@ public enum Param {
 
     private final String value;
 
-    private Param(String value) {
+    private TMDbQueries(String value) {
         this.value = value;
     }
 
@@ -103,9 +104,9 @@ public enum Param {
      * @param value
      * @return
      */
-    public static Param fromString(String value) {
+    public static TMDbQueries fromString(String value) {
         if (StringUtils.isNotBlank(value)) {
-            for (final Param param : EnumSet.allOf(Param.class)) {
+            for (final TMDbQueries param : EnumSet.allOf(TMDbQueries.class)) {
                 if (value.equalsIgnoreCase(param.value)) {
                     return param;
                 }

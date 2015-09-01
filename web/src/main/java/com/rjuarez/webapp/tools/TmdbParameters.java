@@ -31,155 +31,168 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  *
  * @author Stuart
  */
-public class TmdbParameters {
+public class TMDbParameters {
 
-    private final Map<Param, String> parameters = new EnumMap<>(Param.class);
+	private final Map<TMDbQueries, String> parameters = new EnumMap<>(TMDbQueries.class);
 
-    /**
-     * Construct an empty set of parameters
-     */
-    public TmdbParameters() {
-    }
+	/**
+	 * Construct an empty set of parameters
+	 */
+	public TMDbParameters() {
+	}
 
-    /**
-     * Get the entry set of the parameters
-     *
-     * @return
-     */
-    public Set<Map.Entry<Param, String>> getEntries() {
-        return parameters.entrySet();
-    }
+	/**
+	 * Get the entry set of the parameters
+	 *
+	 * @return
+	 */
+	public Set<Map.Entry<TMDbQueries, String>> getEntries() {
+		return parameters.entrySet();
+	}
 
-    /**
-     * Add an array parameter to the collection
-     *
-     * @param key Parameter to add
-     * @param value The array value to use (will be converted into a comma separated list)
-     */
-    public void add(final Param key, final String[] value) {
-        if (value != null && value.length > 0) {
-            parameters.put(key, toList(value));
-        }
-    }
+	/**
+	 * Add an array parameter to the collection
+	 *
+	 * @param key
+	 *            Parameter to add
+	 * @param value
+	 *            The array value to use (will be converted into a comma
+	 *            separated list)
+	 */
+	public void add(final TMDbQueries key, final String[] value) {
+		if (value != null && value.length > 0) {
+			parameters.put(key, toList(value));
+		}
+	}
 
-    /**
-     * Add a string parameter to the collection
-     *
-     * @param key Parameter to add
-     * @param value The value to add (will be checked to ensure it's valid)
-     */
-    public void add(final Param key, final String value) {
-        if (StringUtils.isNotBlank(value)) {
-            parameters.put(key, value);
-        }
-    }
+	/**
+	 * Add a string parameter to the collection
+	 *
+	 * @param key
+	 *            Parameter to add
+	 * @param value
+	 *            The value to add (will be checked to ensure it's valid)
+	 */
+	public void add(final TMDbQueries key, final String value) {
+		if (StringUtils.isNotBlank(value)) {
+			parameters.put(key, value);
+		}
+	}
 
-    /**
-     * Add an integer parameter to the collection
-     *
-     * @param key Parameter to add
-     * @param value The value to add (will be checked to ensure >0)
-     */
-    public void add(final Param key, final Integer value) {
-        if (value != null && value > 0) {
-            parameters.put(key, String.valueOf(value));
-        }
-    }
+	/**
+	 * Add an integer parameter to the collection
+	 *
+	 * @param key
+	 *            Parameter to add
+	 * @param value
+	 *            The value to add (will be checked to ensure >0)
+	 */
+	public void add(final TMDbQueries key, final Integer value) {
+		if (value != null && value > 0) {
+			parameters.put(key, String.valueOf(value));
+		}
+	}
 
-    /**
-     * Add a float parameter to the collection
-     *
-     * @param key Parameter to add
-     * @param value The value to add (will be checked to ensure >0)
-     */
-    public void add(final Param key, final Float value) {
-        if (value != null && value > 0f) {
-            parameters.put(key, String.valueOf(value));
-        }
-    }
+	/**
+	 * Add a float parameter to the collection
+	 *
+	 * @param key
+	 *            Parameter to add
+	 * @param value
+	 *            The value to add (will be checked to ensure >0)
+	 */
+	public void add(final TMDbQueries key, final Float value) {
+		if (value != null && value > 0f) {
+			parameters.put(key, String.valueOf(value));
+		}
+	}
 
-    /**
-     * Add a boolean parameter to the collection
-     *
-     * @param key Parameter to add
-     * @param value The value to add (will be checked to ensure >0)
-     */
-    public void add(final Param key, final Boolean value) {
-        if (value != null) {
-            parameters.put(key, String.valueOf(value));
-        }
-    }
+	/**
+	 * Add a boolean parameter to the collection
+	 *
+	 * @param key
+	 *            Parameter to add
+	 * @param value
+	 *            The value to add (will be checked to ensure >0)
+	 */
+	public void add(final TMDbQueries key, final Boolean value) {
+		if (value != null) {
+			parameters.put(key, String.valueOf(value));
+		}
+	}
 
-    /**
-     * Check to see if the collection has a certain parameter
-     *
-     * @param key The Parameter to check
-     * @return
-     */
-    public boolean has(final Param key) {
-        return parameters.containsKey(key);
-    }
+	/**
+	 * Check to see if the collection has a certain parameter
+	 *
+	 * @param key
+	 *            The Parameter to check
+	 * @return
+	 */
+	public boolean has(final TMDbQueries key) {
+		return parameters.containsKey(key);
+	}
 
-    /**
-     * Get a parameter from the collection
-     *
-     * @param key The parameter to get
-     * @return
-     */
-    public Object get(final Param key) {
-        return parameters.get(key);
-    }
+	/**
+	 * Get a parameter from the collection
+	 *
+	 * @param key
+	 *            The parameter to get
+	 * @return
+	 */
+	public Object get(final TMDbQueries key) {
+		return parameters.get(key);
+	}
 
-    /**
-     * Remove a parameter from the collection
-     *
-     * @param key
-     */
-    public void remove(final Param key) {
-        parameters.remove(key);
-    }
+	/**
+	 * Remove a parameter from the collection
+	 *
+	 * @param key
+	 */
+	public void remove(final TMDbQueries key) {
+		parameters.remove(key);
+	}
 
-    /**
-     * Check to see if the collection has no items
-     *
-     * @return
-     */
-    public boolean isEmpty() {
-        return parameters.isEmpty();
-    }
+	/**
+	 * Check to see if the collection has no items
+	 *
+	 * @return
+	 */
+	public boolean isEmpty() {
+		return parameters.isEmpty();
+	}
 
-    /**
-     * Check to see if the collection has items
-     *
-     * @return
-     */
-    public boolean isNotEmpty() {
-        return !isEmpty();
-    }
+	/**
+	 * Check to see if the collection has items
+	 *
+	 * @return
+	 */
+	public boolean isNotEmpty() {
+		return !isEmpty();
+	}
 
-    /**
-     * Append any optional parameters to the URL
-     *
-     * @param appendToResponse
-     * @return
-     */
-    public String toList(final String[] appendToResponse) {
-        StringBuilder sb = new StringBuilder();
-        boolean first = Boolean.TRUE;
-        for (String append : appendToResponse) {
-            if (first) {
-                first = Boolean.FALSE;
-            } else {
-                sb.append(",");
-            }
-            sb.append(append);
-        }
+	/**
+	 * Append any optional parameters to the URL
+	 *
+	 * @param appendToResponse
+	 * @return
+	 */
+	public String toList(final String[] appendToResponse) {
+		StringBuilder sb = new StringBuilder();
+		boolean first = Boolean.TRUE;
+		for (String append : appendToResponse) {
+			if (first) {
+				first = Boolean.FALSE;
+			} else {
+				sb.append(",");
+			}
+			sb.append(append);
+		}
 
-        return sb.toString();
-    }
+		return sb.toString();
+	}
 
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(parameters, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(parameters, ToStringStyle.SHORT_PREFIX_STYLE);
+	}
 }

@@ -46,15 +46,15 @@ public class ApiUrl {
     private static final String DELIMITER_SUBSEQUENT = "&";
     // Properties
     private final String apiKey;
-    private final MethodBase method;
+    private final TMDbMethod method;
     private MethodSub submethod = MethodSub.NONE;
-    private static final List<Param> IGNORE_PARAMS = new ArrayList<>();
+    private static final List<TMDbQueries> IGNORE_PARAMS = new ArrayList<>();
 
     static {
-        IGNORE_PARAMS.add(Param.ID);
-        IGNORE_PARAMS.add(Param.QUERY);
-        IGNORE_PARAMS.add(Param.SEASON_NUMBER);
-        IGNORE_PARAMS.add(Param.EPISODE_NUMBER);
+        IGNORE_PARAMS.add(TMDbQueries.ID);
+        IGNORE_PARAMS.add(TMDbQueries.QUERY);
+        IGNORE_PARAMS.add(TMDbQueries.SEASON_NUMBER);
+        IGNORE_PARAMS.add(TMDbQueries.EPISODE_NUMBER);
     }
 
     /**
@@ -63,7 +63,7 @@ public class ApiUrl {
      * @param apiKey
      * @param method
      */
-    public ApiUrl(String apiKey, MethodBase method) {
+    public ApiUrl(String apiKey, TMDbMethod method) {
         this.apiKey = apiKey;
         this.method = method;
     }
@@ -87,7 +87,7 @@ public class ApiUrl {
      * @return
      */
     public URL buildUrl() {
-        return buildUrl(new TmdbParameters());
+        return buildUrl(new TMDbParameters());
     }
 
     /**
@@ -96,21 +96,21 @@ public class ApiUrl {
      * @param params
      * @return
      */
-    public URL buildUrl(final TmdbParameters params) {
+    public URL buildUrl(final TMDbParameters params) {
         StringBuilder urlString = new StringBuilder(TMDB_API_BASE);
 
         LOG.trace("Method: '{}', Sub-method: '{}', Params: {}", method.getValue(), submethod.getValue(),
                 ToStringBuilder.reflectionToString(params, ToStringStyle.SHORT_PREFIX_STYLE));
 
         // Get the start of the URL, substituting TV for the season or episode methods
-        if (method == MethodBase.SEASON || method == MethodBase.EPISODE) {
-            urlString.append(MethodBase.TV.getValue());
+        if (method == TMDbMethod.SEASON || method == TMDbMethod.EPISODE) {
+            urlString.append(TMDbMethod.TV.getValue());
         } else {
             urlString.append(method.getValue());
         }
 
         // We have either a queury, or a ID request
-        if (params.has(Param.QUERY)) {
+        if (params.has(TMDbQueries.QUERY)) {
             urlString.append(queryProcessing(params));
         } else {
             urlString.append(idProcessing(params));
@@ -133,7 +133,7 @@ public class ApiUrl {
      * @param params
      * @return
      */
-    private StringBuilder queryProcessing(TmdbParameters params) {
+    private StringBuilder queryProcessing(TMDbParameters params) {
         StringBuilder urlString = new StringBuilder();
 
         // Append the suffix of the API URL
@@ -143,14 +143,14 @@ public class ApiUrl {
 
         // Append the key information
         urlString.append(DELIMITER_FIRST)
-                .append(Param.API_KEY.getValue())
+                .append(TMDbQueries.API_KEY.getValue())
                 .append(apiKey);
 
         // Append the search term
         urlString.append(DELIMITER_SUBSEQUENT);
-        urlString.append(Param.QUERY.getValue());
+        urlString.append(TMDbQueries.QUERY.getValue());
 
-        String query = (String) params.get(Param.QUERY);
+        String query = (String) params.get(TMDbQueries.QUERY);
 
         try {
             urlString.append(URLEncoder.encode(query, "UTF-8"));
@@ -169,20 +169,20 @@ public class ApiUrl {
      * @param params
      * @return
      */
-    private StringBuilder idProcessing(final TmdbParameters params) {
+    private StringBuilder idProcessing(final TMDbParameters params) {
         StringBuilder urlString = new StringBuilder();
 
         // Append the ID
-        if (params.has(Param.ID)) {
-            urlString.append("/").append(params.get(Param.ID));
+        if (params.has(TMDbQueries.ID)) {
+            urlString.append("/").append(params.get(TMDbQueries.ID));
         }
 
-        if (params.has(Param.SEASON_NUMBER)) {
-            urlString.append("/season/").append(params.get(Param.SEASON_NUMBER));
+        if (params.has(TMDbQueries.SEASON_NUMBER)) {
+            urlString.append("/season/").append(params.get(TMDbQueries.SEASON_NUMBER));
         }
 
-        if (params.has(Param.EPISODE_NUMBER)) {
-            urlString.append("/episode/").append(params.get(Param.EPISODE_NUMBER));
+        if (params.has(TMDbQueries.EPISODE_NUMBER)) {
+            urlString.append("/episode/").append(params.get(TMDbQueries.EPISODE_NUMBER));
         }
 
         if (submethod != MethodSub.NONE) {
@@ -191,7 +191,7 @@ public class ApiUrl {
 
         // Append the key information
         urlString.append(DELIMITER_FIRST)
-                .append(Param.API_KEY.getValue())
+                .append(TMDbQueries.API_KEY.getValue())
                 .append(apiKey);
 
         return urlString;
@@ -203,10 +203,10 @@ public class ApiUrl {
      * @param params
      * @return
      */
-    private StringBuilder otherProcessing(final TmdbParameters params) {
+    private StringBuilder otherProcessing(final TMDbParameters params) {
         StringBuilder urlString = new StringBuilder();
 
-        for (Map.Entry<Param, String> argEntry : params.getEntries()) {
+        for (Map.Entry<TMDbQueries, String> argEntry : params.getEntries()) {
             // Skip the ID an QUERY params
             if (IGNORE_PARAMS.contains(argEntry.getKey())) {
                 continue;

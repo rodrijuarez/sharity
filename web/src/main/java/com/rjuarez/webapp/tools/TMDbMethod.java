@@ -22,7 +22,7 @@ package com.rjuarez.webapp.tools;
 import java.util.EnumSet;
 import org.apache.commons.lang3.StringUtils;
 
-public enum MethodBase {
+public enum TMDbMethod {
 
     ACCOUNT("account"),
     AUTH("authentication"),
@@ -50,7 +50,7 @@ public enum MethodBase {
 
     private final String value;
 
-    private MethodBase(String value) {
+    private TMDbMethod(String value) {
         this.value = value;
     }
 
@@ -69,9 +69,9 @@ public enum MethodBase {
      * @param value
      * @return
      */
-    public static MethodBase fromString(String value) {
+    public static TMDbMethod fromString(String value) {
         if (StringUtils.isNotBlank(value)) {
-            for (final MethodBase method : EnumSet.allOf(MethodBase.class)) {
+            for (final TMDbMethod method : EnumSet.allOf(TMDbMethod.class)) {
                 if (value.equalsIgnoreCase(method.value)) {
                     return method;
                 }
