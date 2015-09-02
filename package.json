@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/rodrijuarez/sharity/issues"
   },
-  "homepage": "https://github.com/rodrijuarez/sharity#readme"
+  "homepage": "https://github.com/rodrijuarez/sharity#readme",
+  "dependencies": {
+    "browserify": "^11.0.1"
+  }
 }
