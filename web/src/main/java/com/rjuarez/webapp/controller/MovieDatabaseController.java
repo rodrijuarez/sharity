@@ -18,7 +18,6 @@ import com.rjuarez.webapp.tools.MethodSub;
 import com.rjuarez.webapp.tools.TMDbMethod;
 import com.rjuarez.webapp.tools.TMDbParameters;
 import com.rjuarez.webapp.tools.TMDbQueries;
-import com.rjuarez.webapp.tools.TMDbQueries;
 
 @Controller
 @RequestMapping("/movie/database*")

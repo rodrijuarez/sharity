@@ -1,6 +1,6 @@
-web/target
-core/target
+node_modules
 .settings
-.project
-.checkstyle
-*.orig
+target
+npm-debug.log
+*.project
+*.classpath
