@@ -26,17 +26,19 @@ import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
 /**
- * <p>StartupListener class used to initialize and database settings
- * and populate any application-wide drop-downs.
+ * StartupListener class used to initialize and database settings and populate
+ * any application-wide drop-downs.
  * <p/>
- * <p>Keep in mind that this listener is executed outside of OpenSessionInViewFilter,
- * so if you're using Hibernate you'll have to explicitly initialize all loaded data at the
- * GenericDao or service level to avoid LazyInitializationException. Hibernate.initialize() works
- * well for doing this.
+ * Keep in mind that this listener is executed outside of
+ * OpenSessionInViewFilter, so if you're using Hibernate you'll have to
+ * explicitly initialize all loaded data at the GenericDao or service level to
+ * avoid LazyInitializationException. Hibernate.initialize() works well for
+ * doing this.
  *
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  */
 public class StartupListener implements ServletContextListener {
+    private static final int RANDOM_TO_NUMBER = 100000;
     private static final Log log = LogFactory.getLog(StartupListener.class);
 
     /**
@@ -56,8 +58,7 @@ public class StartupListener implements ServletContextListener {
             config = new HashMap<>();
         }
 
-        ApplicationContext ctx =
-                WebApplicationContextUtils.getRequiredWebApplicationContext(context);
+        ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(context);
 
         PasswordEncoder passwordEncoder = null;
         try {
@@ -109,7 +110,7 @@ public class StartupListener implements ServletContextListener {
         // and use a random cache buster so developers don't have to clear
         // their browser cache.
         if (appVersion == null || appVersion.contains("SNAPSHOT")) {
-            appVersion = "" + new Random().nextInt(100000);
+            appVersion = "" + new Random().nextInt(RANDOM_TO_NUMBER);
         }
 
         log.info("Application version set to: " + appVersion);
@@ -117,9 +118,11 @@ public class StartupListener implements ServletContextListener {
     }
 
     /**
-     * This method uses the LookupManager to lookup available roles from the data layer.
+     * This method uses the LookupManager to lookup available roles from the
+     * data layer.
      *
-     * @param context The servlet context
+     * @param context
+     *            The servlet context
      */
     public static void setupContext(ServletContext context) {
         ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(context);
@@ -142,12 +145,16 @@ public class StartupListener implements ServletContextListener {
     /**
      * Shutdown servlet context (currently a no-op method).
      *
-     * @param servletContextEvent The servlet context event
+     * @param servletContextEvent
+     *            The servlet context event
      */
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
-        //LogFactory.release(Thread.currentThread().getContextClassLoader());
-        //Commented out the above call to avoid warning when SLF4J in classpath.
-        //WARN: The method class org.apache.commons.logging.impl.SLF4JLogFactory#release() was invoked.
-        //WARN: Please see http://www.slf4j.org/codes.html for an explanation.
+        // LogFactory.release(Thread.currentThread().getContextClassLoader());
+        // Commented out the above call to avoid warning when SLF4J in
+        // classpath.
+        // WARN: The method class
+        // org.apache.commons.logging.impl.SLF4JLogFactory#release() was
+        // invoked.
+        // WARN: Please see http://www.slf4j.org/codes.html for an explanation.
     }
 }

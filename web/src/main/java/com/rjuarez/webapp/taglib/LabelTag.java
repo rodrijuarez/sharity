@@ -23,21 +23,25 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-
 /**
- * <p>This class is designed to render a <label> tag for labeling your forms and
- * adds an asterik (*) for required fields.  It was originally written by Erik
+ * <p>
+ * This class is designed to render a <label> tag for labeling your forms and
+ * adds an asterik (*) for required fields. It was originally written by Erik
  * Hatcher (http://www.ehatchersolutions.com/JavaDevWithAnt/).
  * <p/>
- * <p>It is designed to be used as follows:
- * <pre>&lt;tag:label key="userForm.username"/&gt;</pre>
+ * <p>
+ * It is designed to be used as follows:
+ * 
+ * <pre>
+ * &lt;tag:label key="userForm.username"/&gt;
+ * </pre>
  *
  * @jsp.tag name="label" bodycontent="empty"
  */
 public class LabelTag extends TagSupport {
     private static final long serialVersionUID = -5310144023136517119L;
     protected RequestContext requestContext;
-    protected transient final Log log = LogFactory.getLog(LabelTag.class);
+    protected final transient Log log = LogFactory.getLog(LabelTag.class);
     protected String key = null;
     protected String styleClass = null;
     protected String errorClass = null;
@@ -46,8 +50,7 @@ public class LabelTag extends TagSupport {
     public int doStartTag() throws JspException {
 
         try {
-            this.requestContext =
-                    new RequestContext((HttpServletRequest) this.pageContext.getRequest());
+            this.requestContext = new RequestContext((HttpServletRequest) this.pageContext.getRequest());
         } catch (RuntimeException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -88,7 +91,7 @@ public class LabelTag extends TagSupport {
         List<?> fes = null;
         if (errors != null) {
             fes = errors.getFieldErrors(fieldName);
-            //String errorMsg = getErrorMessages(fes);
+            // String errorMsg = getErrorMessages(fes);
         }
 
         if (fes != null && fes.size() > 0) {
@@ -146,20 +149,21 @@ public class LabelTag extends TagSupport {
     /**
      * Extract the error messages from the given ObjectError list.
      */
-    /*private String getErrorMessages(List fes) throws NoSuchMessageException {
-        StringBuffer message = new StringBuffer();
-        for (int i = 0; i < fes.size(); i++) {
-            ObjectError error = (ObjectError) fes.get(i);
-            message.append(this.requestContext.getMessage(error, true));
-        }
-        return message.toString();
-    }*/
+    /*
+     * private String getErrorMessages(List fes) throws NoSuchMessageException {
+     * StringBuffer message = new StringBuffer(); for (int i = 0; i <
+     * fes.size(); i++) { ObjectError error = (ObjectError) fes.get(i);
+     * message.append(this.requestContext.getMessage(error, true)); } return
+     * message.toString(); }
+     */
 
     /**
      * Write the message to the page.
      *
-     * @param msg the message to write
-     * @throws IOException if writing failed
+     * @param msg
+     *            the message to write
+     * @throws IOException
+     *             if writing failed
      */
 
     protected void writeMessage(String msg) throws IOException {
@@ -192,8 +196,8 @@ public class LabelTag extends TagSupport {
     }
 
     /**
-     * Setter for assigning a CSS class when errors occur,
-     * defaults to labelError.
+     * Setter for assigning a CSS class when errors occur, defaults to
+     * labelError.
      *
      * @jsp.attribute required="false" rtexprvalue="true"
      */
@@ -213,26 +217,24 @@ public class LabelTag extends TagSupport {
         requestContext = null;
     }
 
-/**
- * Do End Tag to clear objects from memory
- */
-public final int doEndTag()
-{
-     super.release();
+    /**
+     * Do End Tag to clear objects from memory
+     */
+    public final int doEndTag() {
+        super.release();
         key = null;
         colon = false;
         styleClass = null;
         errorClass = null;
         requestContext = null;
         return 1;
-    
-}
 
+    }
 
     /**
-     * Get the validator resources from a ValidatorFactory defined in the
-     * web application context or one of its parent contexts.
-     * The bean is resolved by type (org.springframework.validation.commons.ValidatorFactory).
+     * Get the validator resources from a ValidatorFactory defined in the web
+     * application context or one of its parent contexts. The bean is resolved
+     * by type (org.springframework.validation.commons.ValidatorFactory).
      *
      * @return ValidatorResources from a ValidatorFactory.
      */
@@ -242,18 +244,14 @@ public final int doEndTag()
                 .getAttribute(DispatcherServlet.WEB_APPLICATION_CONTEXT_ATTRIBUTE);
         ValidatorFactory factory = null;
         try {
-            factory = (ValidatorFactory) BeanFactoryUtils
-                    .beanOfTypeIncludingAncestors(ctx, ValidatorFactory.class, true, true);
+            factory = (ValidatorFactory) BeanFactoryUtils.beanOfTypeIncludingAncestors(ctx, ValidatorFactory.class, true, true);
         } catch (NoSuchBeanDefinitionException e) {
             // look in main application context (i.e. applicationContext.xml)
-            ctx = WebApplicationContextUtils
-                    .getRequiredWebApplicationContext(pageContext.getServletContext());
-            factory = (ValidatorFactory) BeanFactoryUtils
-                    .beanOfTypeIncludingAncestors(ctx, ValidatorFactory.class, true, true);
+            ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(pageContext.getServletContext());
+            factory = (ValidatorFactory) BeanFactoryUtils.beanOfTypeIncludingAncestors(ctx, ValidatorFactory.class, true, true);
         }
         return factory.getValidatorResources();
     }
-
 
     /**
      * Use the application context itself for default message resolution.

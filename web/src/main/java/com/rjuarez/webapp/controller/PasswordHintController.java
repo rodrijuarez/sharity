@@ -57,8 +57,7 @@ public class PasswordHintController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView handleRequest(HttpServletRequest request)
-    throws Exception {
+    public ModelAndView handleRequest(HttpServletRequest request) throws Exception {
         log.debug("entering 'handleRequest' method...");
 
         String username = request.getParameter("username");
@@ -79,11 +78,10 @@ public class PasswordHintController {
 
             StringBuffer msg = new StringBuffer();
             msg.append("Your password hint is: ").append(user.getPasswordHint());
-            msg.append("\n\nLogin at: ").append(RequestUtil.getAppURL(request));
+            msg.append("\n\nLogin at: ").append(RequestUtil.getAppUrl(request));
 
             message.setTo(user.getEmail());
-            String subject = '[' + text.getMessage("webapp.name") + "] " + 
-                             text.getMessage("user.passwordHint");
+            String subject = '[' + text.getMessage("webapp.name") + "] " + text.getMessage("user.passwordHint");
             message.setSubject(subject);
             message.setText(msg.toString());
             mailEngine.send(message);

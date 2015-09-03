@@ -17,52 +17,53 @@
  *      along with TheMovieDB API.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
 package com.rjuarez.webapp.moviedbapi;
 
 import java.net.URL;
+
 import org.yamj.api.common.exception.ApiException;
 import org.yamj.api.common.exception.ApiExceptionType;
 
 public class MovieDbException extends ApiException {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public MovieDbException(ApiExceptionType exceptionType, String response) {
+    public MovieDbException(final ApiExceptionType exceptionType, final String response) {
         super(exceptionType, response);
     }
 
-    public MovieDbException(ApiExceptionType exceptionType, String response, URL url) {
+    public MovieDbException(final ApiExceptionType exceptionType, final String response, final URL url) {
         super(exceptionType, response, url);
     }
 
-    public MovieDbException(ApiExceptionType exceptionType, String response, int responseCode, URL url) {
+    public MovieDbException(final ApiExceptionType exceptionType, final String response, final int responseCode, final URL url) {
         super(exceptionType, response, responseCode, url);
     }
 
-    public MovieDbException(ApiExceptionType exceptionType, String response, String url) {
+    public MovieDbException(final ApiExceptionType exceptionType, final String response, final String url) {
         super(exceptionType, response, url);
     }
 
-    public MovieDbException(ApiExceptionType exceptionType, String response, int responseCode, String url) {
+    public MovieDbException(final ApiExceptionType exceptionType, final String response, final int responseCode, final String url) {
         super(exceptionType, response, responseCode, url);
     }
 
-    public MovieDbException(ApiExceptionType exceptionType, String response, URL url, Throwable cause) {
+    public MovieDbException(final ApiExceptionType exceptionType, final String response, final URL url, final Throwable cause) {
         super(exceptionType, response, url, cause);
     }
 
-    public MovieDbException(ApiExceptionType exceptionType, String response, int responseCode, URL url, Throwable cause) {
+    public MovieDbException(final ApiExceptionType exceptionType, final String response, final int responseCode, final URL url,
+            final Throwable cause) {
         super(exceptionType, response, responseCode, url, cause);
     }
 
-    public MovieDbException(ApiExceptionType exceptionType, String response, String url, Throwable cause) {
+    public MovieDbException(final ApiExceptionType exceptionType, final String response, final String url, final Throwable cause) {
         super(exceptionType, response, url, cause);
     }
 
-    public MovieDbException(ApiExceptionType exceptionType, String response, int responseCode, String url, Throwable cause) {
+    public MovieDbException(final ApiExceptionType exceptionType, final String response, final int responseCode, final String url,
+            final Throwable cause) {
         super(exceptionType, response, responseCode, url, cause);
     }
 }

@@ -14,23 +14,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.rjuarez.webapp.jsp;
 
 /**
- * Handles escaping of characters that could be interpreted as XML markup.
- * <p>The specification for <code>&lt;c:out&gt;</code> defines the following
- * character conversions to be applied:
+ * Handles escaping of characters that could be interpreted as XML markup. The
+ * specification for <code>&lt;c:out&gt;</code> defines the following character
+ * conversions to be applied:
  * <table rules="all" frame="border">
- * <tr><th>Character</th><th>Character Entity Code</th></tr>
- * <tr><td>&lt;</td><td>&amp;lt;</td></tr>
- * <tr><td>&gt;</td><td>&amp;gt;</td></tr>
- * <tr><td>&amp;</td><td>&amp;amp;</td></tr>
- * <tr><td>&#039;</td><td>&amp;#039;</td></tr>
- * <tr><td>&#034;</td><td>&amp;#034;</td></tr>
+ * <tr>
+ * <th>Character</th>
+ * <th>Character Entity Code</th>
+ * </tr>
+ * <tr>
+ * <td>&lt;</td>
+ * <td>&amp;lt;</td>
+ * </tr>
+ * <tr>
+ * <td>&gt;</td>
+ * <td>&amp;gt;</td>
+ * </tr>
+ * <tr>
+ * <td>&amp;</td>
+ * <td>&amp;amp;</td>
+ * </tr>
+ * <tr>
+ * <td>&#039;</td>
+ * <td>&amp;#039;</td>
+ * </tr>
+ * <tr>
+ * <td>&#034;</td>
+ * <td>&amp;#034;</td>
+ * </tr>
  * </table>
  */
 public class EscapeXml {
-    
+
     private static final String[] ESCAPES;
 
     static {
@@ -50,7 +69,7 @@ public class EscapeXml {
             return null;
         }
     }
-    
+
     /**
      * Escape a string.
      * 
@@ -59,7 +78,8 @@ public class EscapeXml {
      * @return the escaped string
      */
     public static String escape(String src) {
-        // first pass to determine the length of the buffer so we only allocate once
+        // first pass to determine the length of the buffer so we only allocate
+        // once
         int length = 0;
         for (int i = 0; i < src.length(); i++) {
             char c = src.charAt(i);

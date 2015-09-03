@@ -22,6 +22,7 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+
 package com.rjuarez.webapp.jsp;
 
 import javax.servlet.ServletContextEvent;
@@ -31,7 +32,7 @@ import javax.servlet.jsp.JspFactory;
 /**
  * Registers ELResolver that escapes XML in EL expression String values.
  */
-public class EscapeXmlELResolverListener implements ServletContextListener {
+public class EscapeXmlExpressionLanguageResolverListener implements ServletContextListener {
 
     public void contextInitialized(ServletContextEvent event) {
         // APF-1379: Prevent NPE when using Tomcat Maven Plugin
@@ -40,9 +41,7 @@ public class EscapeXmlELResolverListener implements ServletContextListener {
         } catch (ClassNotFoundException cnfe) {
             // ignore
         }
-        JspFactory.getDefaultFactory()
-                .getJspApplicationContext(event.getServletContext())
-                .addELResolver(new EscapeXmlELResolver());
+        JspFactory.getDefaultFactory().getJspApplicationContext(event.getServletContext()).addELResolver(new EscapeXmlExpressionLanguageResolver());
     }
 
     public void contextDestroyed(ServletContextEvent event) {

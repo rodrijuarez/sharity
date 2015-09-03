@@ -31,11 +31,13 @@ import java.util.Map;
 
 /**
  * Implementation of <strong>SimpleFormController</strong> that contains
- * convenience methods for subclasses.  For example, getting the current
- * user and saving messages/errors. This class is intended to
- * be a base class for all Form controllers.
+ * convenience methods for subclasses. For example, getting the current user and
+ * saving messages/errors. This class is intended to be a base class for all
+ * Form controllers.
  *
- * <p><a href="BaseFormController.java.html"><i>View Source</i></a></p>
+ * <p>
+ * <a href="BaseFormController.java.html"><i>View Source</i></a>
+ * </p>
  *
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  */
@@ -79,7 +81,7 @@ public class BaseFormController implements ServletContextAware {
         errors.add(error);
         request.getSession().setAttribute(ERRORS_MESSAGES_KEY, errors);
     }
-    
+
     @SuppressWarnings("unchecked")
     public void saveMessage(HttpServletRequest request, String msg) {
         List<String> messages = (List<String>) request.getSession().getAttribute(MESSAGES_KEY);
@@ -93,12 +95,13 @@ public class BaseFormController implements ServletContextAware {
     }
 
     /**
-     * Convenience method for getting a i18n key's value.  Calling
-     * getMessageSourceAccessor() is used because the RequestContext variable
-     * is not set in unit tests b/c there's no DispatchServlet Request.
+     * Convenience method for getting a i18n key's value. Calling
+     * getMessageSourceAccessor() is used because the RequestContext variable is
+     * not set in unit tests b/c there's no DispatchServlet Request.
      *
      * @param msgKey
-     * @param locale the current locale
+     * @param locale
+     *            the current locale
      * @return
      */
     public String getText(String msgKey, Locale locale) {
@@ -106,12 +109,13 @@ public class BaseFormController implements ServletContextAware {
     }
 
     /**
-     * Convenient method for getting a i18n key's value with a single
-     * string argument.
+     * Convenient method for getting a i18n key's value with a single string
+     * argument.
      *
      * @param msgKey
      * @param arg
-     * @param locale the current locale
+     * @param locale
+     *            the current locale
      * @return
      */
     public String getText(String msgKey, String arg, Locale locale) {
@@ -123,7 +127,8 @@ public class BaseFormController implements ServletContextAware {
      *
      * @param msgKey
      * @param args
-     * @param locale the current locale
+     * @param locale
+     *            the current locale
      * @return
      */
     public String getText(String msgKey, Object[] args, Locale locale) {
@@ -131,8 +136,8 @@ public class BaseFormController implements ServletContextAware {
     }
 
     /**
-     * Convenience method to get the Configuration HashMap
-     * from the servlet context.
+     * Convenience method to get the Configuration HashMap from the servlet
+     * context.
      *
      * @return the user's populated form from the session
      */
@@ -148,31 +153,34 @@ public class BaseFormController implements ServletContextAware {
     }
 
     /**
-     * Set up a custom property editor for converting form inputs to real objects
-     * @param request the current request
-     * @param binder the data binder
+     * Set up a custom property editor for converting form inputs to real
+     * objects
+     * 
+     * @param request
+     *            the current request
+     * @param binder
+     *            the data binder
      */
     @InitBinder
-    protected void initBinder(HttpServletRequest request,
-                              ServletRequestDataBinder binder) {
-        binder.registerCustomEditor(Integer.class, null,
-                                    new CustomNumberEditor(Integer.class, null, true));
-        binder.registerCustomEditor(Long.class, null,
-                                    new CustomNumberEditor(Long.class, null, true));
-        binder.registerCustomEditor(byte[].class,
-                                    new ByteArrayMultipartFileEditor());
-        SimpleDateFormat dateFormat = 
-            new SimpleDateFormat(getText("date.format", request.getLocale()));
+    protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
+        binder.registerCustomEditor(Integer.class, null, new CustomNumberEditor(Integer.class, null, true));
+        binder.registerCustomEditor(Long.class, null, new CustomNumberEditor(Long.class, null, true));
+        binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
+        SimpleDateFormat dateFormat = new SimpleDateFormat(getText("date.format", request.getLocale()));
         dateFormat.setLenient(false);
-        binder.registerCustomEditor(Date.class, null, 
-                                    new CustomDateEditor(dateFormat, true));
+        binder.registerCustomEditor(Date.class, null, new CustomDateEditor(dateFormat, true));
     }
 
     /**
-     * Convenience message to send messages to users, includes app URL as footer.
-     * @param user the user to send a message to.
-     * @param msg the message to send.
-     * @param url the URL of the application.
+     * Convenience message to send messages to users, includes app URL as
+     * footer.
+     * 
+     * @param user
+     *            the user to send a message to.
+     * @param msg
+     *            the message to send.
+     * @param url
+     *            the URL of the application.
      */
     protected void sendUserMessage(User user, String msg, String url) {
         if (log.isDebugEnabled()) {
@@ -185,8 +193,8 @@ public class BaseFormController implements ServletContextAware {
         model.put("user", user);
 
         // TODO: once you figure out how to get the global resource bundle in
-        // WebWork, then figure it out here too.  In the meantime, the Username
-        // and Password labels are hard-coded into the template. 
+        // WebWork, then figure it out here too. In the meantime, the Username
+        // and Password labels are hard-coded into the template.
         // model.put("bundle", getTexts());
         model.put("message", msg);
         model.put("applicationURL", url);
@@ -206,7 +214,7 @@ public class BaseFormController implements ServletContextAware {
     public void setTemplateName(String templateName) {
         this.templateName = templateName;
     }
-   
+
     public final BaseFormController setCancelView(String cancelView) {
         this.cancelView = cancelView;
         return this;
@@ -214,16 +222,16 @@ public class BaseFormController implements ServletContextAware {
 
     public final String getCancelView() {
         // Default to successView if cancelView is invalid
-        if (this.cancelView == null || this.cancelView.length()==0) {
+        if (this.cancelView == null || this.cancelView.length() == 0) {
             return getSuccessView();
         }
-        return this.cancelView;   
+        return this.cancelView;
     }
 
     public final String getSuccessView() {
         return this.successView;
     }
-    
+
     public final BaseFormController setSuccessView(String successView) {
         this.successView = successView;
         return this;

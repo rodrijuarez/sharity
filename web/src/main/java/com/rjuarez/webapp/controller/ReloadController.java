@@ -28,7 +28,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin/reload*")
 public class ReloadController {
-    private transient final Log log = LogFactory.getLog(ReloadController.class);
+    private final transient Log log = LogFactory.getLog(ReloadController.class);
 
     @RequestMapping(method = RequestMethod.GET)
     @SuppressWarnings("unchecked")

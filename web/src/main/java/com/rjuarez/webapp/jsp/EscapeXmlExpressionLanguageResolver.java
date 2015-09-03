@@ -22,6 +22,7 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+
 package com.rjuarez.webapp.jsp;
 
 import javax.el.ELContext;
@@ -33,13 +34,12 @@ import java.util.Iterator;
 /**
  * {@link javax.el.ELResolver} which escapes XML in String values.
  */
-public class EscapeXmlELResolver extends ELResolver {
+public class EscapeXmlExpressionLanguageResolver extends ELResolver {
 
     /**
      * pageContext attribute name for flag to enable XML escaping
      */
-    public static final String ESCAPE_XML_ATTRIBUTE =
-            EscapeXmlELResolver.class.getName() + ".escapeXml";
+    public static final String ESCAPE_XML_ATTRIBUTE = EscapeXmlExpressionLanguageResolver.class.getName() + ".escapeXml";
 
     private ThreadLocal<Boolean> excludeMe = new ThreadLocal<Boolean>() {
         @Override
@@ -49,13 +49,12 @@ public class EscapeXmlELResolver extends ELResolver {
     };
 
     @Override
-    public Class<?> getCommonPropertyType(ELContext context, Object base) {
+    public Class<?> getCommonPropertyType(final ELContext context, final Object base) {
         return null;
     }
 
     @Override
-    public Iterator<FeatureDescriptor> getFeatureDescriptors(
-            ELContext context, Object base) {
+    public Iterator<FeatureDescriptor> getFeatureDescriptors(final ELContext context, final Object base) {
         return null;
     }
 
@@ -82,8 +81,7 @@ public class EscapeXmlELResolver extends ELResolver {
             // invoking the original resolver chain again when its turn in the
             // chain comes around.
             excludeMe.set(Boolean.TRUE);
-            Object value = context.getELResolver().getValue(
-                    context, base, property);
+            Object value = context.getELResolver().getValue(context, base, property);
 
             if (value instanceof String) {
                 value = EscapeXml.escape((String) value);

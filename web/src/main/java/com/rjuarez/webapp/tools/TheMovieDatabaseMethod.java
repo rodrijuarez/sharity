@@ -17,40 +17,22 @@
  *      along with TheMovieDB API.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
 package com.rjuarez.webapp.tools;
 
 import java.util.EnumSet;
 import org.apache.commons.lang3.StringUtils;
 
-public enum TMDbMethod {
+public enum TheMovieDatabaseMethod {
 
-    ACCOUNT("account"),
-    AUTH("authentication"),
-    CERTIFICATION("certification"),
-    COLLECTION("collection"),
-    COMPANY("company"),
-    CONFIGURATION("configuration"),
-    CREDIT("credit"),
-    DISCOVER("discover"),
-    EPISODE("episode"),
-    FIND("find"),
-    GENRE("genre"),
-    GUEST_SESSION("guest_session"),
-    JOB("job"),
-    KEYWORD("keyword"),
-    LIST("list"),
-    MOVIE("movie"),
-    NETWORK("network"),
-    PERSON("person"),
-    REVIEW("review"),
-    SEARCH("search"),
-    SEASON("season"),
-    TIMEZONES("timezones"),
-    TV("tv");
+    ACCOUNT("account"), AUTH("authentication"), CERTIFICATION("certification"), COLLECTION("collection"), COMPANY("company"), CONFIGURATION(
+            "configuration"), CREDIT("credit"), DISCOVER("discover"), EPISODE("episode"), FIND("find"), GENRE("genre"), GUEST_SESSION(
+                    "guest_session"), JOB("job"), KEYWORD("keyword"), LIST("list"), MOVIE("movie"), NETWORK("network"), PERSON("person"), REVIEW(
+                            "review"), SEARCH("search"), SEASON("season"), TIMEZONES("timezones"), TV("tv");
 
     private final String value;
 
-    private TMDbMethod(String value) {
+    private TheMovieDatabaseMethod(String value) {
         this.value = value;
     }
 
@@ -69,9 +51,9 @@ public enum TMDbMethod {
      * @param value
      * @return
      */
-    public static TMDbMethod fromString(String value) {
+    public static TheMovieDatabaseMethod fromString(String value) {
         if (StringUtils.isNotBlank(value)) {
-            for (final TMDbMethod method : EnumSet.allOf(TMDbMethod.class)) {
+            for (final TheMovieDatabaseMethod method : EnumSet.allOf(TheMovieDatabaseMethod.class)) {
                 if (value.equalsIgnoreCase(method.value)) {
                     return method;
                 }

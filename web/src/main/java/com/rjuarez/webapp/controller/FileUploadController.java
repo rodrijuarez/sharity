@@ -28,6 +28,8 @@ import java.io.OutputStream;
 @RequestMapping("/fileupload*")
 public class FileUploadController extends BaseFormController {
 
+    private static final int BYTES_FOR_BUFFER = 8192;
+
     public FileUploadController() {
         setCancelView("redirect:/home");
         setSuccessView("uploadDisplay");
@@ -89,9 +91,9 @@ public class FileUploadController extends BaseFormController {
         //write the file to the file specified
         OutputStream bos = new FileOutputStream(uploadDir + file.getOriginalFilename());
         int bytesRead;
-        byte[] buffer = new byte[8192];
+        byte[] buffer = new byte[BYTES_FOR_BUFFER];
 
-        while ((bytesRead = stream.read(buffer, 0, 8192)) != -1) {
+        while ((bytesRead = stream.read(buffer, 0, BYTES_FOR_BUFFER)) != -1) {
             bos.write(buffer, 0, bytesRead);
         }
 

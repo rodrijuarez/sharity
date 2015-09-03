@@ -36,7 +36,8 @@ public class CountryTag extends TagSupport {
     private String selected;
 
     /**
-     * @param name The name to set.
+     * @param name
+     *            The name to set.
      *
      * @jsp.attribute required="false" rtexprvalue="true"
      */
@@ -45,7 +46,8 @@ public class CountryTag extends TagSupport {
     }
 
     /**
-     * @param prompt The prompt to set.
+     * @param prompt
+     *            The prompt to set.
      * @jsp.attribute required="false" rtexprvalue="true"
      */
     public void setPrompt(String prompt) {
@@ -53,7 +55,8 @@ public class CountryTag extends TagSupport {
     }
 
     /**
-     * @param selected The selected option.
+     * @param selected
+     *            The selected option.
      * @jsp.attribute required="false" rtexprvalue="true"
      */
     public void setDefault(String selected) {
@@ -61,8 +64,8 @@ public class CountryTag extends TagSupport {
     }
 
     /**
-     * Property used to simply stuff the list of countries into a
-     * specified scope.
+     * Property used to simply stuff the list of countries into a specified
+     * scope.
      *
      * @param scope
      *
@@ -77,7 +80,8 @@ public class CountryTag extends TagSupport {
      *
      * @return int status
      *
-     * @exception JspException if a JSP exception has occurred
+     * @exception JspException
+     *                if a JSP exception has occurred
      *
      * @see javax.servlet.jsp.tagext.Tag#doStartTag()
      */
@@ -145,16 +149,17 @@ public class CountryTag extends TagSupport {
     }
 
     /**
-     * Build a List of LabelValues for all the available countries. Uses
-     * the two letter uppercase ISO name of the country as the value and the
-     * localized country name as the label.
+     * Build a List of LabelValues for all the available countries. Uses the two
+     * letter uppercase ISO name of the country as the value and the localized
+     * country name as the label.
      *
-     * @param locale The Locale used to localize the country names.
+     * @param locale
+     *            The Locale used to localize the country names.
      *
      * @return List of LabelValues for all available countries.
      */
-    protected List<LabelValue> buildCountryList(Locale locale) {
-        final String EMPTY = "";
+    protected List<LabelValue> buildCountryList(final Locale locale) {
+        final String empty = "";
         final Locale[] available = Locale.getAvailableLocales();
 
         List<LabelValue> countries = new ArrayList<>();
@@ -163,7 +168,7 @@ public class CountryTag extends TagSupport {
             final String iso = available[i].getCountry();
             final String name = available[i].getDisplayCountry(locale);
 
-            if (!EMPTY.equals(iso) && !EMPTY.equals(name)) {
+            if (!empty.equals(iso) && !empty.equals(name)) {
                 LabelValue country = new LabelValue(name, iso);
 
                 if (!countries.contains(country)) {
@@ -178,8 +183,8 @@ public class CountryTag extends TagSupport {
     }
 
     /**
-     * Class to compare LabelValues using their labels with
-     * locale-sensitive behaviour.
+     * Class to compare LabelValues using their labels with locale-sensitive
+     * behaviour.
      */
     public class LabelValueComparator implements Comparator<Object> {
         private Comparator<Object> c;
@@ -187,7 +192,8 @@ public class CountryTag extends TagSupport {
         /**
          * Creates a new LabelValueComparator object.
          *
-         * @param locale The Locale used for localized String comparison.
+         * @param locale
+         *            The Locale used for localized String comparison.
          */
         public LabelValueComparator(Locale locale) {
             c = Collator.getInstance(locale);
@@ -196,8 +202,10 @@ public class CountryTag extends TagSupport {
         /**
          * Compares the localized labels of two LabelValues.
          *
-         * @param o1 The first LabelValue to compare.
-         * @param o2 The second LabelValue to compare.
+         * @param o1
+         *            The first LabelValue to compare.
+         * @param o2
+         *            The second LabelValue to compare.
          *
          * @return The value returned by comparing the localized labels.
          */

@@ -2,63 +2,63 @@
 <%@ include file="/common/taglibs.jsp"%>
 <html lang="en">
 <head>
-    <meta http-equiv="Cache-Control" content="no-store"/>
-    <meta http-equiv="Pragma" content="no-cache"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="<c:url value="/images/favicon.ico"/>"/>
-    <title><decorator:title/> | <fmt:message key="webapp.name"/></title>
-    <t:assets type="css"/>
-    <decorator:head/>
+<meta http-equiv="Cache-Control" content="no-store" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="<c:url value="/images/favicon.ico"/>" />
+<title><decorator:title /> | <fmt:message key="webapp.name" /></title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script type="text/javascript" src="${ctx}/webjars/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="${ctx}/webjars/jquery-cookie/1.3.1/jquery.cookie.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/script.js"></script>
+<decorator:head />
 </head>
-<body<decorator:getProperty property="body.id" writeEntireProperty="true"/><decorator:getProperty property="body.class" writeEntireProperty="true"/>>
-    <c:set var="currentMenu" scope="request"><decorator:getProperty property="meta.menu"/></c:set>
+<body <decorator:getProperty property="body.id" writeEntireProperty="true"/> <decorator:getProperty property="body.class" writeEntireProperty="true"/>>
+    <c:set var="currentMenu" scope="request">
+        <decorator:getProperty property="meta.menu" />
+    </c:set>
 
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+                <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<c:url value='/'/>"><fmt:message key="webapp.name"/></a>
+            <a class="navbar-brand" href="<c:url value='/'/>"><fmt:message key="webapp.name" /></a>
         </div>
 
-        <%@ include file="/common/menu.jsp" %>
+        <%@ include file="/common/menu.jsp"%>
         <c:if test="${pageContext.request.locale.language eq 'es'}">
-            <div id="switchLocale"><a href="<c:url value='/?locale=en'/>">
-                <fmt:message key="webapp.name"/> in English</a>
+            <div id="switchLocale">
+                <a href="<c:url value='/?locale=en'/>"> <fmt:message key="webapp.name" /> in English
+                </a>
             </div>
         </c:if>
     </div>
 
     <div class="container" id="content">
-        <%@ include file="/common/messages.jsp" %>
+        <%@ include file="/common/messages.jsp"%>
         <div class="row">
-            <decorator:body/>
+            <decorator:body />
 
             <c:if test="${currentMenu == 'AdminMenu'}">
                 <div class="col-sm-2">
-                <menu:useMenuDisplayer name="Velocity" config="navlistMenu.vm" permissions="rolesAdapter">
-                    <menu:displayMenu name="AdminMenu"/>
-                </menu:useMenuDisplayer>
+                    <menu:useMenuDisplayer name="Velocity" config="navlistMenu.vm" permissions="rolesAdapter">
+                        <menu:displayMenu name="AdminMenu" />
+                    </menu:useMenuDisplayer>
                 </div>
             </c:if>
         </div>
     </div>
 
     <div id="footer" class="container navbar-fixed-bottom">
-        <span class="col-sm-6 text-left"><fmt:message key="webapp.version"/>
-            <c:if test="${pageContext.request.remoteUser != null}">
-            | <fmt:message key="user.status"/> ${pageContext.request.remoteUser}
-            </c:if>
-        </span>
-        <span class="col-sm-6 text-right">
-            &copy; <fmt:message key="copyright.year"/> <a href="<fmt:message key="company.url"/>"><fmt:message key="company.name"/></a>
+        <span class="col-sm-6 text-left"><fmt:message key="webapp.version" /> <c:if test="${pageContext.request.remoteUser != null}">
+            | <fmt:message key="user.status" /> ${pageContext.request.remoteUser}
+            </c:if> </span> <span class="col-sm-6 text-right"> &copy; <fmt:message key="copyright.year" /> <a href="<fmt:message key="company.url"/>"><fmt:message
+                    key="company.name" /></a>
         </span>
     </div>
-<t:assets type="js"/>    
-<%= (request.getAttribute("scripts") != null) ?  request.getAttribute("scripts") : "" %>
+    <script type="text/javascript" src="${ctx}/scripts/bootstrap.min.js"></script>
 </body>
 </html>

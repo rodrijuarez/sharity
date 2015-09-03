@@ -17,6 +17,7 @@
  *      along with TheMovieDB API.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
 package com.rjuarez.webapp.tools;
 
 import java.util.EnumSet;

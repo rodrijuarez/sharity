@@ -32,13 +32,10 @@ public class UpdatePasswordController extends BaseFormController {
      * @return
      */
     @RequestMapping(value = "/requestRecoveryToken*", method = RequestMethod.GET)
-    public String requestRecoveryToken(
-            @RequestParam(value = "username", required = true) final String username,
-            final HttpServletRequest request)
-    {
+    public String requestRecoveryToken(@RequestParam(value = "username", required = true) final String username, final HttpServletRequest request) {
         log.debug("Sending recovery token to user " + username);
         try {
-            getUserManager().sendPasswordRecoveryEmail(username, RequestUtil.getAppURL(request) + RECOVERY_PASSWORD_TEMPLATE);
+            getUserManager().sendPasswordRecoveryEmail(username, RequestUtil.getAppUrl(request) + RECOVERY_PASSWORD_TEMPLATE);
         } catch (final UsernameNotFoundException ignored) {
             // lets ignore this
         }
@@ -53,11 +50,8 @@ public class UpdatePasswordController extends BaseFormController {
      * @return
      */
     @RequestMapping(value = "/updatePassword*", method = RequestMethod.GET)
-    public ModelAndView showForm(
-            @RequestParam(value = "username", required = false) String username,
-            @RequestParam(value = "token", required = false) final String token,
-            final HttpServletRequest request)
-    {
+    public ModelAndView showForm(@RequestParam(value = "username", required = false) String username,
+            @RequestParam(value = "token", required = false) final String token, final HttpServletRequest request) {
         if (StringUtils.isBlank(username)) {
             username = request.getRemoteUser();
         }
@@ -79,14 +73,10 @@ public class UpdatePasswordController extends BaseFormController {
      * @throws Exception
      */
     @RequestMapping(value = "/updatePassword*", method = RequestMethod.POST)
-    public ModelAndView onSubmit(
-            @RequestParam(value = "username", required = true) final String username,
+    public ModelAndView onSubmit(@RequestParam(value = "username", required = true) final String username,
             @RequestParam(value = "token", required = false) final String token,
             @RequestParam(value = "currentPassword", required = false) final String currentPassword,
-            @RequestParam(value = "password", required = true) final String password,
-            final HttpServletRequest request)
-            throws Exception
-    {
+            @RequestParam(value = "password", required = true) final String password, final HttpServletRequest request) throws Exception {
         log.debug("PasswordRecoveryController onSubmit for username: " + username);
 
         final Locale locale = request.getLocale();
@@ -99,26 +89,22 @@ public class UpdatePasswordController extends BaseFormController {
         final boolean usingToken = StringUtils.isNotBlank(token);
         if (usingToken) {
             log.debug("Updating Password for username " + username + ", using reset token");
-            user = getUserManager().updatePassword(username, null, token, password,
-                    RequestUtil.getAppURL(request));
+            user = getUserManager().updatePassword(username, null, token, password, RequestUtil.getAppUrl(request));
 
         } else {
             log.debug("Updating Password for username " + username + ", using current password");
             if (!username.equals(request.getRemoteUser())) {
                 throw new AccessDeniedException("You do not have permission to modify other users password.");
             }
-            user = getUserManager().updatePassword(username, currentPassword, null, password,
-                    RequestUtil.getAppURL(request));
+            user = getUserManager().updatePassword(username, currentPassword, null, password, RequestUtil.getAppUrl(request));
         }
 
         if (user != null) {
             saveMessage(request, getText("updatePassword.success", new Object[] { username }, locale));
-        }
-        else {
+        } else {
             if (usingToken) {
                 saveError(request, getText("updatePassword.invalidToken", locale));
-            }
-            else {
+            } else {
                 saveError(request, getText("updatePassword.invalidPassword", locale));
                 return showForm(username, null, request);
             }

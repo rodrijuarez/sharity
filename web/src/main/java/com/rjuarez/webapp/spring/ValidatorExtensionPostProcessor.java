@@ -10,7 +10,6 @@ import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 
 /**
- * <p>
  * Adds commons validator configuration files to an existing Spring commons
  * Validator Factory bean, possibly defined within a seperate Spring
  * configuration file in a seperate jar file. By using this extension factory
@@ -18,7 +17,6 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
  * to an AppFuse application without modifying any of the existing AppFuse
  * Spring configuration or jar distribution files.
  * 
- * <p>
  * As an example consider the following Spring bean configuration:
  * 
  * <pre>
@@ -31,7 +29,6 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
  * &lt;/bean&gt;
  * </pre>
  * 
- * <p>
  * The sample adds a single validation configuration file (foo-validation.xml)
  * to an existing Spring commons Validator Factory bean (a bean of class
  * org.springmodules.validation.commons.DefaultValidatorFactory). Assuming the
@@ -46,50 +43,48 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
  * @author Michael Horwitz
  */
 public class ValidatorExtensionPostProcessor implements BeanFactoryPostProcessor {
-	private String validatorFactoryBeanName = "validatorFactory";
-	private List<Map<String, Object[]>> validationConfigLocations;
+    private String validatorFactoryBeanName = "validatorFactory";
+    private List<Map<String, Object[]>> validationConfigLocations;
 
-	/**
-	 * Adds the validation configuration files to the list already held in the
-	 * validator factory bean configuration.
-	 * 
-	 * @param configurableListableBeanFactory
-	 *            the bean factory
-	 */
-	@SuppressWarnings("unchecked")
-	public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) {
-		if (configurableListableBeanFactory.containsBean(validatorFactoryBeanName)) {
-			BeanDefinition validatorFactoryBeanDefinition = configurableListableBeanFactory
-					.getBeanDefinition(validatorFactoryBeanName);
-			MutablePropertyValues propertyValues = validatorFactoryBeanDefinition.getPropertyValues();
-			PropertyValue propertyValue = propertyValues.getPropertyValue("validationConfigLocations");
+    /**
+     * Adds the validation configuration files to the list already held in the
+     * validator factory bean configuration.
+     * 
+     * @param configurableListableBeanFactory
+     *            the bean factory
+     */
+    @SuppressWarnings("unchecked")
+    public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) {
+        if (configurableListableBeanFactory.containsBean(validatorFactoryBeanName)) {
+            BeanDefinition validatorFactoryBeanDefinition = configurableListableBeanFactory.getBeanDefinition(validatorFactoryBeanName);
+            MutablePropertyValues propertyValues = validatorFactoryBeanDefinition.getPropertyValues();
+            PropertyValue propertyValue = propertyValues.getPropertyValue("validationConfigLocations");
 
-			// value is expected to be a list.
-			List<Map<String, Object[]>> existingValidationConfigLocations = (List<Map<String, Object[]>>) propertyValue
-					.getValue();
-			existingValidationConfigLocations.addAll(validationConfigLocations);
-		}
-	}
+            // value is expected to be a list.
+            List<Map<String, Object[]>> existingValidationConfigLocations = (List<Map<String, Object[]>>) propertyValue.getValue();
+            existingValidationConfigLocations.addAll(validationConfigLocations);
+        }
+    }
 
-	/**
-	 * Set the name of the validator factory bean. This defaults to
-	 * &quot;validatorFactory&quot;
-	 *
-	 * @param validatorFactoryBeanName
-	 *            The validator factory bean name.
-	 */
-	public void setValidatorFactoryBeanName(String validatorFactoryBeanName) {
-		this.validatorFactoryBeanName = validatorFactoryBeanName;
-	}
+    /**
+     * Set the name of the validator factory bean. This defaults to
+     * &quot;validatorFactory&quot;
+     *
+     * @param validatorFactoryBeanName
+     *            The validator factory bean name.
+     */
+    public void setValidatorFactoryBeanName(String validatorFactoryBeanName) {
+        this.validatorFactoryBeanName = validatorFactoryBeanName;
+    }
 
-	/**
-	 * The list of validation config locations to be added to the validator
-	 * factory.
-	 *
-	 * @param validationConfigLocations
-	 *            The list of additional validation configuration locations.
-	 */
-	public void setValidationConfigLocations(List<Map<String, Object[]>> validationConfigLocations) {
-		this.validationConfigLocations = validationConfigLocations;
-	}
+    /**
+     * The list of validation config locations to be added to the validator
+     * factory.
+     *
+     * @param validationConfigLocations
+     *            The list of additional validation configuration locations.
+     */
+    public void setValidationConfigLocations(List<Map<String, Object[]>> validationConfigLocations) {
+        this.validationConfigLocations = validationConfigLocations;
+    }
 }
