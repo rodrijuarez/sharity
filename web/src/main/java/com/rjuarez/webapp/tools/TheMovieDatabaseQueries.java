@@ -43,20 +43,20 @@ public enum TheMovieDatabaseQueries {
                                                                                                                     "start_date="), TIMEZONE(
                                                                                                                             "timezone="), TOKEN(
                                                                                                                                     "request_token="), USERNAME(
-                                                                                                                                            "username="), VALUE(
-                                                                                                                                                    "value="), VOTE_AVERAGE_GTE(
-                                                                                                                                                            "vote_average.gte="), VOTE_AVERAGE_LTE(
-                                                                                                                                                                    "vote_average.lte="), VOTE_COUNT_GTE(
-                                                                                                                                                                            "vote_count.gte="), VOTE_COUNT_LTE(
-                                                                                                                                                                                    "vote_count.lte="), WITH_CAST(
-                                                                                                                                                                                            "with_cast="), WITH_COMPANIES(
-                                                                                                                                                                                                    "with_companies="), WITH_CREW(
-                                                                                                                                                                                                            "with_crew="), WITH_GENRES(
-                                                                                                                                                                                                                    "with_genres="), WITH_KEYWORDS(
-                                                                                                                                                                                                                            "with_keywords="), WITH_NETWORKS(
-                                                                                                                                                                                                                                    "with_networks="), WITH_PEOPLE(
-                                                                                                                                                                                                                                            "with_people="), YEAR(
-                                                                                                                                                                                                                                                    "year=");
+"username="), VALUE(
+"value="), VOTE_AVERAGE_GTE(
+"vote_average.gte="), VOTE_AVERAGE_LTE(
+"vote_average.lte="), VOTE_COUNT_GTE(
+"vote_count.gte="), VOTE_COUNT_LTE(
+"vote_count.lte="), WITH_CAST(
+"with_cast="), WITH_COMPANIES(
+"with_companies="), WITH_CREW(
+"with_crew="), WITH_GENRES(
+"with_genres="), WITH_KEYWORDS(
+"with_keywords="), WITH_NETWORKS(
+"with_networks="), WITH_PEOPLE(
+"with_people="), YEAR(
+"year=");
 
     private final String value;
 

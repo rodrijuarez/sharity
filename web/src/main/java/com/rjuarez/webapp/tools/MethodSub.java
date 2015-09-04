@@ -84,26 +84,15 @@ public enum MethodSub {
 
     private final String value;
 
-    private MethodSub(String value) {
+    MethodSub(final String value) {
         this.value = value;
     }
-
-    /**
-     * Get the URL parameter to use
-     *
-     * @return
-     */
+    
     public String getValue() {
         return this.value;
     }
 
-    /**
-     * Convert a string into an Enum type
-     *
-     * @param value
-     * @return
-     */
-    public static MethodSub fromString(String value) {
+    public static MethodSub fromString(final String value) {
         if (StringUtils.isNotBlank(value)) {
             for (final MethodSub method : EnumSet.allOf(MethodSub.class)) {
                 if (value.equalsIgnoreCase(method.value)) {

@@ -62,9 +62,9 @@ public class EscapeXml {
         ESCAPES['"'] = "&#034;";
     }
 
-    private static String getEscape(char c) {
-        if (c < ESCAPES.length) {
-            return ESCAPES[c];
+    private static String getEscape(char character) {
+        if (character < ESCAPES.length) {
+            return ESCAPES[character];
         } else {
             return null;
         }
@@ -82,8 +82,8 @@ public class EscapeXml {
         // once
         int length = 0;
         for (int i = 0; i < src.length(); i++) {
-            char c = src.charAt(i);
-            String escape = getEscape(c);
+            char character = src.charAt(i);
+            String escape = getEscape(character);
             if (escape != null) {
                 length += escape.length();
             } else {
@@ -99,12 +99,12 @@ public class EscapeXml {
         // second pass to build the escaped string
         StringBuilder buf = new StringBuilder(length);
         for (int i = 0; i < src.length(); i++) {
-            char c = src.charAt(i);
-            String escape = getEscape(c);
+            char character = src.charAt(i);
+            String escape = getEscape(character);
             if (escape != null) {
                 buf.append(escape);
             } else {
-                buf.append(c);
+                buf.append(character);
             }
         }
         return buf.toString();

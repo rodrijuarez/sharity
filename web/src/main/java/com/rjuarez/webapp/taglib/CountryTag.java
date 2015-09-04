@@ -96,13 +96,13 @@ public class CountryTag extends TagSupport {
         List<LabelValue> countries = this.buildCountryList(userLocale);
 
         if (scope != null) {
-            if (scope.equals("page")) {
+            if ("page".equals(scope)) {
                 pageContext.setAttribute(name, countries);
-            } else if (scope.equals("request")) {
+            } else if ("request".equals(scope)) {
                 pageContext.getRequest().setAttribute(name, countries);
-            } else if (scope.equals("session")) {
+            } else if ("session".equals(scope)) {
                 pageContext.getSession().setAttribute(name, countries);
-            } else if (scope.equals("application")) {
+            } else if ("application".equals(scope)) {
                 pageContext.getServletContext().setAttribute(name, countries);
             } else {
                 throw new JspException("Attribute 'scope' must be: page, request, session or application");
@@ -187,7 +187,7 @@ public class CountryTag extends TagSupport {
      * behaviour.
      */
     public class LabelValueComparator implements Comparator<Object> {
-        private Comparator<Object> c;
+        private Comparator<Object> comparator;
 
         /**
          * Creates a new LabelValueComparator object.
@@ -196,7 +196,7 @@ public class CountryTag extends TagSupport {
          *            The Locale used for localized String comparison.
          */
         public LabelValueComparator(Locale locale) {
-            c = Collator.getInstance(locale);
+            comparator = Collator.getInstance(locale);
         }
 
         /**
@@ -213,7 +213,7 @@ public class CountryTag extends TagSupport {
             LabelValue lhs = (LabelValue) o1;
             LabelValue rhs = (LabelValue) o2;
 
-            return c.compare(lhs.getLabel(), rhs.getLabel());
+            return comparator.compare(lhs.getLabel(), rhs.getLabel());
         }
     }
 }

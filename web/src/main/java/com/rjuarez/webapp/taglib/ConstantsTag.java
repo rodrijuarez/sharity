@@ -12,17 +12,23 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
- * <p>This class is designed to put all the public variables in a class to a
- * specified scope - designed for exposing a Constants class to Tag
- * Libraries.</p>
- *
- * <p>It is designed to be used as follows:
- * <pre>&lt;tag:constants /&gt;</pre>
+ * <p>
+ * This class is designed to put all the public variables in a class to a
+ * specified scope - designed for exposing a Constants class to Tag Libraries.
  * </p>
  *
- * <p>Optional values are "className" (fully qualified) and "scope".</p>
+ * <p>
+ * It is designed to be used as follows:
+ * 
+ * <pre>
+ * &lt;tag:constants /&gt;
+ * </pre>
+ * </p>
+ *
+ * <p>
+ * Optional values are "className" (fully qualified) and "scope".
+ * </p>
  *
  * <p>
  * <a href="BaseAction.java.html"><i>View Source</i></a>
@@ -50,14 +56,16 @@ public class ConstantsTag extends TagSupport {
     protected String var;
 
     /**
-     * Main method that does processing and exposes Constants in specified scope 
+     * Main method that does processing and exposes Constants in specified scope
+     * 
      * @return int
-     * @throws JspException if processing fails
+     * @throws JspException
+     *             if processing fails
      */
     @Override
     public int doStartTag() throws JspException {
         // Using reflection, get the available field names in the class
-        Class<?> c = null;
+        Class<?> classInstance = null;
         int toScope = PageContext.PAGE_SCOPE;
 
         if (scope != null) {
@@ -65,7 +73,7 @@ public class ConstantsTag extends TagSupport {
         }
 
         try {
-            c = Class.forName(clazz);
+            classInstance = Class.forName(clazz);
         } catch (ClassNotFoundException cnf) {
             log.error("ClassNotFound - maybe a typo?");
             throw new JspException(cnf.getMessage());
@@ -74,7 +82,7 @@ public class ConstantsTag extends TagSupport {
         try {
             // if var is null, expose all variables
             if (var == null) {
-                Field[] fields = c.getDeclaredFields();
+                Field[] fields = classInstance.getDeclaredFields();
 
                 AccessibleObject.setAccessible(fields, true);
 
@@ -83,8 +91,8 @@ public class ConstantsTag extends TagSupport {
                 }
             } else {
                 try {
-                    Object value = c.getField(var).get(this);
-                    pageContext.setAttribute(c.getField(var).getName(), value, toScope);
+                    Object value = classInstance.getField(var).get(this);
+                    pageContext.setAttribute(classInstance.getField(var).getName(), value, toScope);
                 } catch (NoSuchFieldException nsf) {
                     log.error(nsf.getMessage());
                     throw new JspException(nsf);
@@ -147,13 +155,18 @@ public class ConstantsTag extends TagSupport {
         SCOPES.put("session", PageContext.SESSION_SCOPE);
         SCOPES.put("application", PageContext.APPLICATION_SCOPE);
     }
-    
+
     /**
-     * Converts the scope name into its corresponding PageContext constant value.
-     * @param scopeName Can be "page", "request", "session", or "application" in any
-     * case.
-     * @return The constant representing the scope (ie. PageContext.REQUEST_SCOPE).
-     * @throws JspException if the scopeName is not a valid name.
+     * Converts the scope name into its corresponding PageContext constant
+     * value.
+     * 
+     * @param scopeName
+     *            Can be "page", "request", "session", or "application" in any
+     *            case.
+     * @return The constant representing the scope (ie.
+     *         PageContext.REQUEST_SCOPE).
+     * @throws JspException
+     *             if the scopeName is not a valid name.
      */
     public int getScope(String scopeName) throws JspException {
         Integer scope = (Integer) SCOPES.get(scopeName.toLowerCase());

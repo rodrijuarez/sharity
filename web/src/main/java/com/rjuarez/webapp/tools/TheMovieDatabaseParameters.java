@@ -66,98 +66,42 @@ public class TheMovieDatabaseParameters {
         }
     }
 
-    /**
-     * Add a string parameter to the collection
-     *
-     * @param key
-     *            Parameter to add
-     * @param value
-     *            The value to add (will be checked to ensure it's valid)
-     */
     public void add(final TheMovieDatabaseQueries key, final String value) {
         if (StringUtils.isNotBlank(value)) {
             parameters.put(key, value);
         }
     }
 
-    /**
-     * Add an integer parameter to the collection
-     *
-     * @param key
-     *            Parameter to add
-     * @param value
-     *            The value to add (will be checked to ensure >0)
-     */
     public void add(final TheMovieDatabaseQueries key, final Integer value) {
         if (value != null && value > 0) {
             parameters.put(key, String.valueOf(value));
         }
     }
 
-    /**
-     * Add a float parameter to the collection
-     *
-     * @param key
-     *            Parameter to add
-     * @param value
-     *            The value to add (will be checked to ensure >0)
-     */
     public void add(final TheMovieDatabaseQueries key, final Float value) {
         if (value != null && value > 0f) {
             parameters.put(key, String.valueOf(value));
         }
     }
 
-    /**
-     * Add a boolean parameter to the collection
-     *
-     * @param key
-     *            Parameter to add
-     * @param value
-     *            The value to add (will be checked to ensure >0)
-     */
     public void add(final TheMovieDatabaseQueries key, final Boolean value) {
         if (value != null) {
             parameters.put(key, String.valueOf(value));
         }
     }
 
-    /**
-     * Check to see if the collection has a certain parameter
-     *
-     * @param key
-     *            The Parameter to check
-     * @return
-     */
     public boolean has(final TheMovieDatabaseQueries key) {
         return parameters.containsKey(key);
     }
 
-    /**
-     * Get a parameter from the collection
-     *
-     * @param key
-     *            The parameter to get
-     * @return
-     */
     public Object get(final TheMovieDatabaseQueries key) {
         return parameters.get(key);
     }
 
-    /**
-     * Remove a parameter from the collection
-     *
-     * @param key
-     */
     public void remove(final TheMovieDatabaseQueries key) {
         parameters.remove(key);
     }
 
-    /**
-     * Check to see if the collection has no items
-     *
-     * @return
-     */
     public boolean isEmpty() {
         return parameters.isEmpty();
     }

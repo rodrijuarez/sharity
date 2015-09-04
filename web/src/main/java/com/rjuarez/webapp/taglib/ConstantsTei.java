@@ -38,11 +38,11 @@ public class ConstantsTei extends TagExtraInfo {
                 clazz = Constants.class.getName();
             }
 
-            Class<?> c = Class.forName(clazz);
+            Class<?> classInstance = Class.forName(clazz);
 
             // if no var specified, get all
             if (data.getAttributeString("var") == null) {
-                Field[] fields = c.getDeclaredFields();
+                Field[] fields = classInstance.getDeclaredFields();
 
                 AccessibleObject.setAccessible(fields, true);
 
@@ -54,9 +54,9 @@ public class ConstantsTei extends TagExtraInfo {
                 }
             } else {
                 String var = data.getAttributeString("var");
-                String type = c.getField(var).getType().getName();
-                vars.add(new VariableInfo(c.getField(var).getName(),
-                         ((c.getField(var).getType().isArray()) ? type.substring(2, type.length() - 1) + "[]" : type),
+                String type = classInstance.getField(var).getType().getName();
+                vars.add(new VariableInfo(classInstance.getField(var).getName(),
+                         ((classInstance.getField(var).getType().isArray()) ? type.substring(2, type.length() - 1) + "[]" : type),
                          true, VariableInfo.AT_END));
             }
         } catch (Exception cnf) {

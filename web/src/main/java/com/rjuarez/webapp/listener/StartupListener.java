@@ -64,8 +64,8 @@ public class StartupListener implements ServletContextListener {
         try {
             ProviderManager provider = (ProviderManager) ctx.getBean("org.springframework.security.authentication.ProviderManager#0");
             for (Object o : provider.getProviders()) {
-                AuthenticationProvider p = (AuthenticationProvider) o;
-                if (p instanceof RememberMeAuthenticationProvider) {
+                AuthenticationProvider authProvider = (AuthenticationProvider) o;
+                if (authProvider instanceof RememberMeAuthenticationProvider) {
                     config.put("rememberMeEnabled", Boolean.TRUE);
                 } else if (ctx.getBean("passwordEncoder") != null) {
                     passwordEncoder = (PasswordEncoder) ctx.getBean("passwordEncoder");

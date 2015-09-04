@@ -31,8 +31,8 @@ public class ValidationUtil {
      */
     public static boolean validateTwoFields(Object bean, ValidatorAction va, Field field, Errors errors) {
         String value = ValidatorUtils.getValueAsString(bean, field.getProperty());
-        String sProperty2 = field.getVarValue("secondProperty");
-        String value2 = ValidatorUtils.getValueAsString(bean, sProperty2);
+        String secondProperty = field.getVarValue("secondProperty");
+        String value2 = ValidatorUtils.getValueAsString(bean, secondProperty);
 
         if (!GenericValidator.isBlankOrNull(value)) {
             try {
