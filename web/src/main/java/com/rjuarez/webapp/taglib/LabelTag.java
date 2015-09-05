@@ -113,8 +113,8 @@ public class LabelTag extends TagSupport {
             cssClass = "required";
         }
 
-        String cssErrorClass = (errorClass != null) ? errorClass : "error";
-        StringBuilder label = new StringBuilder();
+        final String cssErrorClass = (errorClass != null) ? errorClass : "error";
+        final StringBuilder label = new StringBuilder();
 
         if ((message == null) || "".equals(message.trim())) {
             label.append("");

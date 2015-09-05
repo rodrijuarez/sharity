@@ -32,13 +32,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * The API URL that is used to construct the API call
- *
- * @author Stuart
- */
 public class ApiUrl {
 
+    private static final String SLASH = "/";
     private static final Logger LOG = LoggerFactory.getLogger(ApiUrl.class);
     // TheMovieDbApi API Base URL
     private static final String TMDB_API_BASE = "http://api.themoviedb.org/3/";
@@ -100,18 +96,18 @@ public class ApiUrl {
         try {
             LOG.trace("URL: {}", urlString.toString());
             return new URL(urlString.toString());
-        } catch (MalformedURLException ex) {
+        } catch (final MalformedURLException ex) {
             LOG.warn("Failed to create URL {} - {}", urlString.toString(), ex.getMessage());
             return null;
         }
     }
 
     private StringBuilder queryProcessing(final TheMovieDatabaseParameters params) {
-        StringBuilder urlString = new StringBuilder();
+        final StringBuilder urlString = new StringBuilder();
 
         // Append the suffix of the API URL
         if (submethod != MethodSub.NONE) {
-            urlString.append("/").append(submethod.getValue());
+            urlString.append(SLASH).append(submethod.getValue());
         }
 
         // Append the key information
@@ -121,11 +117,11 @@ public class ApiUrl {
         urlString.append(DELIMITER_SUBSEQUENT);
         urlString.append(TheMovieDatabaseQueries.QUERY.getValue());
 
-        String query = (String) params.get(TheMovieDatabaseQueries.QUERY);
+        final String query = (String) params.get(TheMovieDatabaseQueries.QUERY);
 
         try {
             urlString.append(URLEncoder.encode(query, "UTF-8"));
-        } catch (UnsupportedEncodingException ex) {
+        } catch (final UnsupportedEncodingException ex) {
             LOG.trace("Unable to encode query: '{}' trying raw.", query, ex);
             // If we can't encode it, try it raw
             urlString.append(query);
@@ -134,18 +130,12 @@ public class ApiUrl {
         return urlString;
     }
 
-    /**
-     * Create the ID based URL portion
-     *
-     * @param params
-     * @return
-     */
     private StringBuilder idProcessing(final TheMovieDatabaseParameters params) {
-        StringBuilder urlString = new StringBuilder();
+        final StringBuilder urlString = new StringBuilder();
 
         // Append the ID
         if (params.has(TheMovieDatabaseQueries.ID)) {
-            urlString.append("/").append(params.get(TheMovieDatabaseQueries.ID));
+            urlString.append(SLASH).append(params.get(TheMovieDatabaseQueries.ID));
         }
 
         if (params.has(TheMovieDatabaseQueries.SEASON_NUMBER)) {
@@ -157,7 +147,7 @@ public class ApiUrl {
         }
 
         if (submethod != MethodSub.NONE) {
-            urlString.append("/").append(submethod.getValue());
+            urlString.append(SLASH).append(submethod.getValue());
         }
 
         // Append the key information
@@ -166,14 +156,8 @@ public class ApiUrl {
         return urlString;
     }
 
-    /**
-     * Create a string of the remaining parameters
-     *
-     * @param params
-     * @return
-     */
     private StringBuilder otherProcessing(final TheMovieDatabaseParameters params) {
-        StringBuilder urlString = new StringBuilder();
+        final StringBuilder urlString = new StringBuilder();
 
         for (Map.Entry<TheMovieDatabaseQueries, String> argEntry : params.getEntries()) {
             // Skip the ID an QUERY params
