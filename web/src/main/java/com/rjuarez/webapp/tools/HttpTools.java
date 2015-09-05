@@ -35,20 +35,21 @@ public class HttpTools {
     private static final int RETRY_MAX = 5;
     private static final int STATUS_TOO_MANY_REQUESTS = 429;
 
-    public HttpTools(HttpClient httpClient) {
+    public HttpTools(final HttpClient httpClient) {
         this.httpClient = httpClient;
     }
 
     /**
      * GET data from the URL
      *
-     * @param url URL to use in the request
+     * @param url
+     *            URL to use in the request
      * @return String content
      * @throws MovieDbException
      */
     public String getRequest(final URL url) throws MovieDbException {
         try {
-            HttpGet httpGet = new HttpGet(url.toURI());
+            final HttpGet httpGet = new HttpGet(url.toURI());
             httpGet.addHeader(HttpHeaders.ACCEPT, APPLICATION_JSON);
             DigestedResponse response = DigestedResponseReader.requestContent(httpClient, httpGet, CHARSET);
             long retryCount = 0L;
@@ -64,7 +65,7 @@ public class HttpTools {
             return validateResponse(response, url);
         } catch (URISyntaxException | IOException ex) {
             throw new MovieDbException(ApiExceptionType.CONNECTION_ERROR, null, url, ex);
-        } catch (RuntimeException ex) {
+        } catch (final RuntimeException ex) {
             throw new MovieDbException(ApiExceptionType.HTTP_503_ERROR, "Service Unavailable", url, ex);
         }
     }
@@ -74,11 +75,11 @@ public class HttpTools {
      *
      * @param multiplier
      */
-    private void delay(long multiplier) {
+    private void delay(final long multiplier) {
         try {
             // Wait for the timeout to finish
             Thread.sleep(TimeUnit.SECONDS.toMillis(RETRY_DELAY * multiplier));
-        } catch (InterruptedException ex) {
+        } catch (final InterruptedException ex) {
             // Doesn't matter if we're interrupted
         }
     }
@@ -86,13 +87,14 @@ public class HttpTools {
     /**
      * Execute a DELETE on the URL
      *
-     * @param url URL to use in the request
+     * @param url
+     *            URL to use in the request
      * @return String content
      * @throws MovieDbException
      */
     public String deleteRequest(final URL url) throws MovieDbException {
         try {
-            HttpDelete httpDel = new HttpDelete(url.toURI());
+            final HttpDelete httpDel = new HttpDelete(url.toURI());
             return validateResponse(DigestedResponseReader.deleteContent(httpClient, httpDel, CHARSET), url);
         } catch (URISyntaxException | IOException ex) {
             throw new MovieDbException(ApiExceptionType.CONNECTION_ERROR, null, url, ex);
@@ -102,17 +104,19 @@ public class HttpTools {
     /**
      * POST content to the URL with the specified body
      *
-     * @param url URL to use in the request
-     * @param jsonBody Body to use in the request
+     * @param url
+     *            URL to use in the request
+     * @param jsonBody
+     *            Body to use in the request
      * @return String content
      * @throws MovieDbException
      */
     public String postRequest(final URL url, final String jsonBody) throws MovieDbException {
         try {
-            HttpPost httpPost = new HttpPost(url.toURI());
+            final HttpPost httpPost = new HttpPost(url.toURI());
             httpPost.addHeader(HTTP.CONTENT_TYPE, APPLICATION_JSON);
             httpPost.addHeader(HttpHeaders.ACCEPT, APPLICATION_JSON);
-            StringEntity params = new StringEntity(jsonBody, ContentType.APPLICATION_JSON);
+            final StringEntity params = new StringEntity(jsonBody, ContentType.APPLICATION_JSON);
             httpPost.setEntity(params);
 
             return validateResponse(DigestedResponseReader.postContent(httpClient, httpPost, CHARSET), url);
@@ -124,8 +128,10 @@ public class HttpTools {
     /**
      * Check the status codes of the response and throw exceptions if needed
      *
-     * @param response DigestedResponse to process
-     * @param url URL for notification purposes
+     * @param response
+     *            DigestedResponse to process
+     * @param url
+     *            URL for notification purposes
      * @return String content
      * @throws MovieDbException
      */

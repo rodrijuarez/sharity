@@ -53,7 +53,7 @@ public class EscapeXml {
     private static final String[] ESCAPES;
 
     static {
-        int size = '>' + 1; // '>' is the largest escaped value
+        final int size = '>' + 1; // '>' is the largest escaped value
         ESCAPES = new String[size];
         ESCAPES['<'] = "&lt;";
         ESCAPES['>'] = "&gt;";
@@ -62,7 +62,7 @@ public class EscapeXml {
         ESCAPES['"'] = "&#034;";
     }
 
-    private static String getEscape(char character) {
+    private static String getEscape(final char character) {
         if (character < ESCAPES.length) {
             return ESCAPES[character];
         } else {
@@ -77,13 +77,13 @@ public class EscapeXml {
      *            the string to escape; must not be null
      * @return the escaped string
      */
-    public static String escape(String src) {
+    public static String escape(final String src) {
         // first pass to determine the length of the buffer so we only allocate
         // once
         int length = 0;
         for (int i = 0; i < src.length(); i++) {
-            char character = src.charAt(i);
-            String escape = getEscape(character);
+            final char character = src.charAt(i);
+            final String escape = getEscape(character);
             if (escape != null) {
                 length += escape.length();
             } else {
@@ -97,10 +97,10 @@ public class EscapeXml {
         }
 
         // second pass to build the escaped string
-        StringBuilder buf = new StringBuilder(length);
+        final StringBuilder buf = new StringBuilder(length);
         for (int i = 0; i < src.length(); i++) {
-            char character = src.charAt(i);
-            String escape = getEscape(character);
+            final char character = src.charAt(i);
+            final String escape = getEscape(character);
             if (escape != null) {
                 buf.append(escape);
             } else {

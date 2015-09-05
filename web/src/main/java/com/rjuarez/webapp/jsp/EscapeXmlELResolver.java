@@ -34,12 +34,12 @@ import java.util.Iterator;
 /**
  * {@link javax.el.ELResolver} which escapes XML in String values.
  */
-public class EscapeXmlExpressionLanguageResolver extends ELResolver {
+public class EscapeXmlELResolver extends ELResolver {
 
     /**
      * pageContext attribute name for flag to enable XML escaping
      */
-    public static final String ESCAPE_XML_ATTRIBUTE = EscapeXmlExpressionLanguageResolver.class.getName() + ".escapeXml";
+    public static final String ESCAPE_XML_ATTRIBUTE = EscapeXmlELResolver.class.getName() + ".escapeXml";
 
     private ThreadLocal<Boolean> excludeMe = new ThreadLocal<Boolean>() {
         @Override
@@ -59,14 +59,14 @@ public class EscapeXmlExpressionLanguageResolver extends ELResolver {
     }
 
     @Override
-    public Class<?> getType(ELContext context, Object base, Object property) {
+    public Class<?> getType(final ELContext context, final Object base, final Object property) {
         return null;
     }
 
     @Override
-    public Object getValue(ELContext context, Object base, Object property) {
-        JspContext pageContext = (JspContext) context.getContext(JspContext.class);
-        Boolean escapeXml = (Boolean) pageContext.getAttribute(ESCAPE_XML_ATTRIBUTE);
+    public Object getValue(final ELContext context, final Object base, final Object property) {
+        final JspContext pageContext = (JspContext) context.getContext(JspContext.class);
+        final Boolean escapeXml = (Boolean) pageContext.getAttribute(ESCAPE_XML_ATTRIBUTE);
         if (escapeXml != null && !escapeXml) {
             return null;
         }
@@ -94,12 +94,12 @@ public class EscapeXmlExpressionLanguageResolver extends ELResolver {
     }
 
     @Override
-    public boolean isReadOnly(ELContext context, Object base, Object property) {
+    public boolean isReadOnly(final ELContext context, final Object base, final Object property) {
         return false;
     }
 
     @Override
-    public void setValue(ELContext context, Object base, Object property, Object value) {
+    public void setValue(final ELContext context, final Object base, final Object property, final Object value) {
 
     }
 }

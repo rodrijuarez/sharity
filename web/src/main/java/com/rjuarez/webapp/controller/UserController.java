@@ -25,19 +25,19 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/admin/users*")
 public class UserController {
-    private UserManager userManager = null;
+    private UserManager userManager;
 
     @Autowired
-    public void setUserManager(UserManager userManager) {
+    public void setUserManager(final UserManager userManager) {
         this.userManager = userManager;
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView handleRequest(@RequestParam(required = false, value = "q") String query) throws Exception {
-        Model model = new ExtendedModelMap();
+    public ModelAndView handleRequest(@RequestParam(required = false, value = "q") final String query) throws Exception {
+        final Model model = new ExtendedModelMap();
         try {
             model.addAttribute(Constants.USER_LIST, userManager.search(query));
-        } catch (SearchException se) {
+        } catch (final SearchException se) {
             model.addAttribute("searchError", se.getMessage());
             model.addAttribute(userManager.getUsers());
         }

@@ -49,7 +49,7 @@ public class UserCounterListener implements ServletContextListener, HttpSessionA
      *
      * @param sce the event
      */
-    public synchronized void contextInitialized(ServletContextEvent sce) {
+    public synchronized void contextInitialized(final ServletContextEvent sce) {
         servletContext = sce.getServletContext();
         servletContext.setAttribute((COUNT_KEY), Integer.toString(counter));
     }
@@ -59,7 +59,7 @@ public class UserCounterListener implements ServletContextListener, HttpSessionA
      *
      * @param event The servletContextEvent
      */
-    public synchronized void contextDestroyed(ServletContextEvent event) {
+    public synchronized void contextDestroyed(final ServletContextEvent event) {
         servletContext = null;
         users = null;
         counter = 0;
@@ -83,7 +83,7 @@ public class UserCounterListener implements ServletContextListener, HttpSessionA
     }
 
     @SuppressWarnings("unchecked")
-    synchronized void addUsername(User user) {
+    synchronized void addUsername(final User user) {
         users = (Set<User>) servletContext.getAttribute(USERS_KEY);
 
         if (users == null) {
@@ -98,7 +98,7 @@ public class UserCounterListener implements ServletContextListener, HttpSessionA
     }
 
     @SuppressWarnings("unchecked")
-    synchronized void removeUsername(User user) {
+    synchronized void removeUsername(final User user) {
         users = (Set<User>) servletContext.getAttribute(USERS_KEY);
 
         if (users != null) {
@@ -115,21 +115,21 @@ public class UserCounterListener implements ServletContextListener, HttpSessionA
      * @param event the event to process
      * @see javax.servlet.http.HttpSessionAttributeListener#attributeAdded(javax.servlet.http.HttpSessionBindingEvent)
      */
-    public void attributeAdded(HttpSessionBindingEvent event) {
+    public void attributeAdded(final HttpSessionBindingEvent event) {
         if (event.getName().equals(EVENT_KEY) && !isAnonymous()) {
-            SecurityContext securityContext = (SecurityContext) event.getValue();
+            final SecurityContext securityContext = (SecurityContext) event.getValue();
             if (securityContext != null && securityContext.getAuthentication().getPrincipal() instanceof User) {
-                User user = (User) securityContext.getAuthentication().getPrincipal();
+                final User user = (User) securityContext.getAuthentication().getPrincipal();
                 addUsername(user);
             }
         }
     }
 
     private boolean isAnonymous() {
-        AuthenticationTrustResolver resolver = new AuthenticationTrustResolverImpl();
-        SecurityContext ctx = SecurityContextHolder.getContext();
+        final AuthenticationTrustResolver resolver = new AuthenticationTrustResolverImpl();
+        final SecurityContext ctx = SecurityContextHolder.getContext();
         if (ctx != null) {
-            Authentication auth = ctx.getAuthentication();
+            final Authentication auth = ctx.getAuthentication();
             return resolver.isAnonymous(auth);
         }
         return true;
@@ -141,12 +141,12 @@ public class UserCounterListener implements ServletContextListener, HttpSessionA
      * @param event the session binding event
      * @see javax.servlet.http.HttpSessionAttributeListener#attributeRemoved(javax.servlet.http.HttpSessionBindingEvent)
      */
-    public void attributeRemoved(HttpSessionBindingEvent event) {
+    public void attributeRemoved(final HttpSessionBindingEvent event) {
         if (event.getName().equals(EVENT_KEY) && !isAnonymous()) {
-            SecurityContext securityContext = (SecurityContext) event.getValue();
-            Authentication auth = securityContext.getAuthentication();
+            final SecurityContext securityContext = (SecurityContext) event.getValue();
+            final Authentication auth = securityContext.getAuthentication();
             if (auth != null && (auth.getPrincipal() instanceof User)) {
-                User user = (User) auth.getPrincipal();
+                final User user = (User) auth.getPrincipal();
                 removeUsername(user);
             }
         }
@@ -159,7 +159,7 @@ public class UserCounterListener implements ServletContextListener, HttpSessionA
      * @param event the session binding event
      * @see javax.servlet.http.HttpSessionAttributeListener#attributeReplaced(javax.servlet.http.HttpSessionBindingEvent)
      */
-    public void attributeReplaced(HttpSessionBindingEvent event) {
+    public void attributeReplaced(final HttpSessionBindingEvent event) {
         if (event.getName().equals(EVENT_KEY) && !isAnonymous()) {
             final SecurityContext securityContext = (SecurityContext) event.getValue();
             if (securityContext.getAuthentication() != null
@@ -170,11 +170,11 @@ public class UserCounterListener implements ServletContextListener, HttpSessionA
         }
     }
     
-    public void sessionCreated(HttpSessionEvent se) { 
+    public void sessionCreated(final HttpSessionEvent se) { 
     }
     
-    public void sessionDestroyed(HttpSessionEvent se) {
-        Object obj = se.getSession().getAttribute(EVENT_KEY);
+    public void sessionDestroyed(final HttpSessionEvent se) {
+        final Object obj = se.getSession().getAttribute(EVENT_KEY);
         if (obj != null) {
             se.getSession().removeAttribute(EVENT_KEY);
         }

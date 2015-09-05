@@ -45,9 +45,9 @@ public class BaseFormController implements ServletContextAware {
     public static final String MESSAGES_KEY = "successMessages";
     public static final String ERRORS_MESSAGES_KEY = "errors";
     protected final transient Log log = LogFactory.getLog(getClass());
-    private UserManager userManager = null;
-    protected MailEngine mailEngine = null;
-    protected SimpleMailMessage message = null;
+    private UserManager userManager;
+    protected MailEngine mailEngine;
+    protected SimpleMailMessage message;
     protected String templateName = "accountCreated.vm";
     protected String cancelView;
     protected String successView;
@@ -59,12 +59,12 @@ public class BaseFormController implements ServletContextAware {
     Validator validator;
 
     @Autowired
-    public void setMessages(MessageSource messageSource) {
+    public void setMessages(final MessageSource messageSource) {
         messages = new MessageSourceAccessor(messageSource);
     }
 
     @Autowired
-    public void setUserManager(UserManager userManager) {
+    public void setUserManager(final UserManager userManager) {
         this.userManager = userManager;
     }
 
@@ -73,7 +73,7 @@ public class BaseFormController implements ServletContextAware {
     }
 
     @SuppressWarnings("unchecked")
-    public void saveError(HttpServletRequest request, String error) {
+    public void saveError(final HttpServletRequest request, final String error) {
         List<String> errors = (List<String>) request.getSession().getAttribute(ERRORS_MESSAGES_KEY);
         if (errors == null) {
             errors = new ArrayList<String>();
@@ -83,7 +83,7 @@ public class BaseFormController implements ServletContextAware {
     }
 
     @SuppressWarnings("unchecked")
-    public void saveMessage(HttpServletRequest request, String msg) {
+    public void saveMessage(final HttpServletRequest request, final String msg) {
         List<String> messages = (List<String>) request.getSession().getAttribute(MESSAGES_KEY);
 
         if (messages == null) {
@@ -104,7 +104,7 @@ public class BaseFormController implements ServletContextAware {
      *            the current locale
      * @return
      */
-    public String getText(String msgKey, Locale locale) {
+    public String getText(final String msgKey, final Locale locale) {
         return messages.getMessage(msgKey, locale);
     }
 
@@ -118,7 +118,7 @@ public class BaseFormController implements ServletContextAware {
      *            the current locale
      * @return
      */
-    public String getText(String msgKey, String arg, Locale locale) {
+    public String getText(final String msgKey, final String arg, final Locale locale) {
         return getText(msgKey, new Object[] { arg }, locale);
     }
 
@@ -131,7 +131,7 @@ public class BaseFormController implements ServletContextAware {
      *            the current locale
      * @return
      */
-    public String getText(String msgKey, Object[] args, Locale locale) {
+    public String getText(final String msgKey, final Object[] args, final Locale locale) {
         return messages.getMessage(msgKey, args, locale);
     }
 
@@ -142,7 +142,7 @@ public class BaseFormController implements ServletContextAware {
      * @return the user's populated form from the session
      */
     public Map<?, ?> getConfiguration() {
-        Map<?, ?> config = (HashMap<?, ?>) servletContext.getAttribute(Constants.CONFIG);
+        final Map<?, ?> config = (HashMap<?, ?>) servletContext.getAttribute(Constants.CONFIG);
 
         // so unit tests don't puke when nothing's been set
         if (config == null) {
@@ -162,11 +162,11 @@ public class BaseFormController implements ServletContextAware {
      *            the data binder
      */
     @InitBinder
-    protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
+    protected void initBinder(final HttpServletRequest request, final ServletRequestDataBinder binder) {
         binder.registerCustomEditor(Integer.class, null, new CustomNumberEditor(Integer.class, null, true));
         binder.registerCustomEditor(Long.class, null, new CustomNumberEditor(Long.class, null, true));
         binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
-        SimpleDateFormat dateFormat = new SimpleDateFormat(getText("date.format", request.getLocale()));
+        final SimpleDateFormat dateFormat = new SimpleDateFormat(getText("date.format", request.getLocale()));
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, null, new CustomDateEditor(dateFormat, true));
     }
@@ -182,14 +182,14 @@ public class BaseFormController implements ServletContextAware {
      * @param url
      *            the URL of the application.
      */
-    protected void sendUserMessage(User user, String msg, String url) {
+    protected void sendUserMessage(final User user, final String msg, final String url) {
         if (log.isDebugEnabled()) {
             log.debug("sending e-mail to user [" + user.getEmail() + "]...");
         }
 
         message.setTo(user.getFullName() + "<" + user.getEmail() + ">");
 
-        Map<String, Serializable> model = new HashMap<String, Serializable>();
+        final Map<String, Serializable> model = new HashMap<String, Serializable>();
         model.put("user", user);
 
         // TODO: once you figure out how to get the global resource bundle in
@@ -202,20 +202,20 @@ public class BaseFormController implements ServletContextAware {
     }
 
     @Autowired
-    public void setMailEngine(MailEngine mailEngine) {
+    public void setMailEngine(final MailEngine mailEngine) {
         this.mailEngine = mailEngine;
     }
 
     @Autowired
-    public void setMessage(SimpleMailMessage message) {
+    public void setMessage(final SimpleMailMessage message) {
         this.message = message;
     }
 
-    public void setTemplateName(String templateName) {
+    public void setTemplateName(final String templateName) {
         this.templateName = templateName;
     }
 
-    public final BaseFormController setCancelView(String cancelView) {
+    public final BaseFormController setCancelView(final String cancelView) {
         this.cancelView = cancelView;
         return this;
     }
@@ -232,12 +232,12 @@ public class BaseFormController implements ServletContextAware {
         return this.successView;
     }
 
-    public final BaseFormController setSuccessView(String successView) {
+    public final BaseFormController setSuccessView(final String successView) {
         this.successView = successView;
         return this;
     }
 
-    public void setServletContext(ServletContext servletContext) {
+    public void setServletContext(final ServletContext servletContext) {
         this.servletContext = servletContext;
     }
 

@@ -32,8 +32,8 @@ public class ReloadController {
 
     @RequestMapping(method = RequestMethod.GET)
     @SuppressWarnings("unchecked")
-    public ModelAndView handleRequest(HttpServletRequest request,
-                                      HttpServletResponse response)
+    public ModelAndView handleRequest(final HttpServletRequest request,
+                                      final HttpServletResponse response)
     throws Exception {
         if (log.isDebugEnabled()) {
             log.debug("Entering 'execute' method");
@@ -41,7 +41,7 @@ public class ReloadController {
 
         StartupListener.setupContext(request.getSession().getServletContext());
 
-        String referer = request.getHeader("Referer");
+        final String referer = request.getHeader("Referer");
 
         if (referer != null) {
             log.info("reload complete, reloading user back to: " + referer);
@@ -59,7 +59,7 @@ public class ReloadController {
         } else {
             response.setContentType("text/html");
 
-            PrintWriter out = response.getWriter();
+            final PrintWriter out = response.getWriter();
 
             out.println("<html>");
             out.println("<head>");

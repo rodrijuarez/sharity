@@ -29,13 +29,13 @@ public class PasswordHintControllerTest extends BaseControllerTestCase {
     @Test
     public void testExecute() throws Exception {
        // start SMTP Server
-        Wiser wiser = startWiser(getSmtpPort());
+        final Wiser wiser = startWiser(getSmtpPort());
 
-        ResultActions actions = mockMvc.perform(get("/passwordHint.html").param("username", "user"))
+        final ResultActions actions = mockMvc.perform(get("/passwordHint.html").param("username", "user"))
             .andExpect(status().is3xxRedirection());
 
-        MvcResult result = actions.andReturn();
-        MockHttpSession session = (MockHttpSession) result.getRequest().getSession();
+        final MvcResult result = actions.andReturn();
+        final MockHttpSession session = (MockHttpSession) result.getRequest().getSession();
         // verify that success messages are in the session
         assertNotNull(session.getAttribute(BaseFormController.MESSAGES_KEY));
 

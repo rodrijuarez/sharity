@@ -41,7 +41,7 @@ public class CountryTag extends TagSupport {
      *
      * @jsp.attribute required="false" rtexprvalue="true"
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -50,7 +50,7 @@ public class CountryTag extends TagSupport {
      *            The prompt to set.
      * @jsp.attribute required="false" rtexprvalue="true"
      */
-    public void setPrompt(String prompt) {
+    public void setPrompt(final String prompt) {
         this.prompt = prompt;
     }
 
@@ -59,7 +59,7 @@ public class CountryTag extends TagSupport {
      *            The selected option.
      * @jsp.attribute required="false" rtexprvalue="true"
      */
-    public void setDefault(String selected) {
+    public void setDefault(final String selected) {
         this.selected = selected;
     }
 
@@ -71,7 +71,7 @@ public class CountryTag extends TagSupport {
      *
      * @jsp.attribute required="false" rtexprvalue="true"
      */
-    public void setToScope(String scope) {
+    public void setToScope(final String scope) {
         this.scope = scope;
     }
 
@@ -85,15 +85,16 @@ public class CountryTag extends TagSupport {
      *
      * @see javax.servlet.jsp.tagext.Tag#doStartTag()
      */
+    @Override
     public int doStartTag() throws JspException {
-        ExpressionEvaluator eval = new ExpressionEvaluator(this, pageContext);
+        final ExpressionEvaluator eval = new ExpressionEvaluator(this, pageContext);
 
         if (selected != null) {
             selected = eval.evalString("default", selected);
         }
 
-        Locale userLocale = pageContext.getRequest().getLocale();
-        List<LabelValue> countries = this.buildCountryList(userLocale);
+        final Locale userLocale = pageContext.getRequest().getLocale();
+        final List<LabelValue> countries = this.buildCountryList(userLocale);
 
         if (scope != null) {
             if ("page".equals(scope)) {
@@ -108,7 +109,7 @@ public class CountryTag extends TagSupport {
                 throw new JspException("Attribute 'scope' must be: page, request, session or application");
             }
         } else {
-            StringBuilder sb = new StringBuilder();
+            final StringBuilder sb = new StringBuilder();
             sb.append("<select name=\"").append(name).append("\" id=\"").append(name).append("\" class=\"form-control\">\n");
 
             if (prompt != null) {
@@ -116,8 +117,8 @@ public class CountryTag extends TagSupport {
                 sb.append(eval.evalString("prompt", prompt)).append("</option>\n");
             }
 
-            for (Iterator<LabelValue> i = countries.iterator(); i.hasNext();) {
-                LabelValue country = i.next();
+            for (final Iterator<LabelValue> i = countries.iterator(); i.hasNext();) {
+                final LabelValue country = i.next();
                 sb.append("    <option value=\"").append(country.getValue()).append("\"");
 
                 if ((selected != null) && selected.equals(country.getValue())) {
@@ -131,7 +132,7 @@ public class CountryTag extends TagSupport {
 
             try {
                 pageContext.getOut().write(sb.toString());
-            } catch (IOException io) {
+            } catch (final IOException io) {
                 throw new JspException(io);
             }
         }
@@ -144,6 +145,7 @@ public class CountryTag extends TagSupport {
      *
      * @see javax.servlet.jsp.tagext.Tag#release()
      */
+    @Override
     public void release() {
         super.release();
     }
@@ -162,14 +164,14 @@ public class CountryTag extends TagSupport {
         final String empty = "";
         final Locale[] available = Locale.getAvailableLocales();
 
-        List<LabelValue> countries = new ArrayList<>();
+        final List<LabelValue> countries = new ArrayList<>();
 
         for (int i = 0; i < available.length; i++) {
             final String iso = available[i].getCountry();
             final String name = available[i].getDisplayCountry(locale);
 
             if (!empty.equals(iso) && !empty.equals(name)) {
-                LabelValue country = new LabelValue(name, iso);
+                final LabelValue country = new LabelValue(name, iso);
 
                 if (!countries.contains(country)) {
                     countries.add(new LabelValue(name, iso));
@@ -187,7 +189,7 @@ public class CountryTag extends TagSupport {
      * behaviour.
      */
     public class LabelValueComparator implements Comparator<Object> {
-        private Comparator<Object> comparator;
+        private final Comparator<Object> comparator;
 
         /**
          * Creates a new LabelValueComparator object.
@@ -195,7 +197,7 @@ public class CountryTag extends TagSupport {
          * @param locale
          *            The Locale used for localized String comparison.
          */
-        public LabelValueComparator(Locale locale) {
+        public LabelValueComparator(final Locale locale) {
             comparator = Collator.getInstance(locale);
         }
 
@@ -209,9 +211,10 @@ public class CountryTag extends TagSupport {
          *
          * @return The value returned by comparing the localized labels.
          */
-        public final int compare(Object o1, Object o2) {
-            LabelValue lhs = (LabelValue) o1;
-            LabelValue rhs = (LabelValue) o2;
+        @Override
+        public final int compare(final Object o1, final Object o2) {
+            final LabelValue lhs = (LabelValue) o1;
+            final LabelValue rhs = (LabelValue) o2;
 
             return comparator.compare(lhs.getLabel(), rhs.getLabel());
         }

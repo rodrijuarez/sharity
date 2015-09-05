@@ -1,5 +1,13 @@
 package com.rjuarez.webapp.taglib;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.TagSupport;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.validator.Field;
@@ -15,13 +23,6 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.RequestContext;
 import org.springmodules.validation.commons.ValidatorFactory;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.TagSupport;
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * <p>
@@ -47,13 +48,14 @@ public class LabelTag extends TagSupport {
     protected String errorClass = null;
     protected boolean colon = false;
 
+    @Override
     public int doStartTag() throws JspException {
 
         try {
             this.requestContext = new RequestContext((HttpServletRequest) this.pageContext.getRequest());
-        } catch (RuntimeException ex) {
+        } catch (final RuntimeException ex) {
             throw ex;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             pageContext.getServletContext().log("Exception in custom tag", ex);
         }
 
@@ -61,7 +63,7 @@ public class LabelTag extends TagSupport {
         boolean requiredField = false;
         boolean validationError = false;
 
-        ValidatorResources resources = getValidatorResources();
+        final ValidatorResources resources = getValidatorResources();
 
         Locale locale = pageContext.getRequest().getLocale();
 
@@ -70,14 +72,14 @@ public class LabelTag extends TagSupport {
         }
 
         // get the name of the bean from the key
-        String formName = key.substring(0, key.indexOf('.'));
-        String fieldName = key.substring(formName.length() + 1);
+        final String formName = key.substring(0, key.indexOf('.'));
+        final String fieldName = key.substring(formName.length() + 1);
 
         if (resources != null) {
-            Form form = resources.getForm(locale, formName);
+            final Form form = resources.getForm(locale, formName);
 
             if (form != null) {
-                Field field = form.getField(fieldName);
+                final Field field = form.getField(fieldName);
 
                 if (field != null) {
                     if (field.isDependency("required") || field.isDependency("validwhen")) {
@@ -87,7 +89,7 @@ public class LabelTag extends TagSupport {
             }
         }
 
-        Errors errors = requestContext.getErrors(formName, false);
+        final Errors errors = requestContext.getErrors(formName, false);
         List<?> fes = null;
         if (errors != null) {
             fes = errors.getFieldErrors(fieldName);
@@ -102,7 +104,7 @@ public class LabelTag extends TagSupport {
         String message = null;
         try {
             message = getMessageSource().getMessage(key, null, locale);
-        } catch (NoSuchMessageException nsm) {
+        } catch (final NoSuchMessageException nsm) {
             message = "???" + key + "???";
         }
 
@@ -137,7 +139,7 @@ public class LabelTag extends TagSupport {
         // Print the retrieved message to our output writer
         try {
             writeMessage(label.toString());
-        } catch (IOException io) {
+        } catch (final IOException io) {
             io.printStackTrace();
             throw new JspException("Error writing label: " + io.getMessage());
         }
@@ -166,14 +168,14 @@ public class LabelTag extends TagSupport {
      *             if writing failed
      */
 
-    protected void writeMessage(String msg) throws IOException {
+    protected void writeMessage(final String msg) throws IOException {
         pageContext.getOut().write(msg);
     }
 
     /**
      * @jsp.attribute required="true" rtexprvalue="true"
      */
-    public void setKey(String key) {
+    public void setKey(final String key) {
         this.key = key;
     }
 
@@ -182,7 +184,7 @@ public class LabelTag extends TagSupport {
      *
      * @jsp.attribute required="false" rtexprvalue="true"
      */
-    public void setColon(boolean colon) {
+    public void setColon(final boolean colon) {
         this.colon = colon;
     }
 
@@ -191,7 +193,7 @@ public class LabelTag extends TagSupport {
      *
      * @jsp.attribute required="false" rtexprvalue="true"
      */
-    public void setStyleClass(String styleClass) {
+    public void setStyleClass(final String styleClass) {
         this.styleClass = styleClass;
     }
 
@@ -201,13 +203,14 @@ public class LabelTag extends TagSupport {
      *
      * @jsp.attribute required="false" rtexprvalue="true"
      */
-    public void setErrorClass(String errorClass) {
+    public void setErrorClass(final String errorClass) {
         this.errorClass = errorClass;
     }
 
     /**
      * Release all allocated resources.
      */
+    @Override
     public void release() {
         super.release();
         key = null;
@@ -220,6 +223,7 @@ public class LabelTag extends TagSupport {
     /**
      * Do End Tag to clear objects from memory
      */
+    @Override
     public final int doEndTag() {
         super.release();
         key = null;
@@ -240,15 +244,14 @@ public class LabelTag extends TagSupport {
      */
     private ValidatorResources getValidatorResources() {
         // look in servlet beans definition (i.e. action-servlet.xml)
-        WebApplicationContext ctx = (WebApplicationContext) pageContext.getRequest()
-                .getAttribute(DispatcherServlet.WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+        WebApplicationContext ctx = (WebApplicationContext) pageContext.getRequest().getAttribute(DispatcherServlet.WEB_APPLICATION_CONTEXT_ATTRIBUTE);
         ValidatorFactory factory = null;
         try {
-            factory = (ValidatorFactory) BeanFactoryUtils.beanOfTypeIncludingAncestors(ctx, ValidatorFactory.class, true, true);
-        } catch (NoSuchBeanDefinitionException e) {
+            factory = BeanFactoryUtils.beanOfTypeIncludingAncestors(ctx, ValidatorFactory.class, true, true);
+        } catch (final NoSuchBeanDefinitionException e) {
             // look in main application context (i.e. applicationContext.xml)
             ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(pageContext.getServletContext());
-            factory = (ValidatorFactory) BeanFactoryUtils.beanOfTypeIncludingAncestors(ctx, ValidatorFactory.class, true, true);
+            factory = BeanFactoryUtils.beanOfTypeIncludingAncestors(ctx, ValidatorFactory.class, true, true);
         }
         return factory.getValidatorResources();
     }

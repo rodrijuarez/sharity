@@ -20,13 +20,14 @@
 
 package com.rjuarez.webapp.tools;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.yamj.api.common.exception.ApiExceptionType;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rjuarez.webapp.moviedbapi.MovieDbException;
-
-import java.util.HashMap;
-import java.util.Map;
-import org.yamj.api.common.exception.ApiExceptionType;
 
 /**
  *
@@ -42,12 +43,12 @@ public class PostTools {
     public PostTools() {
     }
 
-    public PostTools add(PostBody key, Object value) {
+    public PostTools add(final PostBody key, final Object value) {
         values.put(key.getValue(), value);
         return this;
     }
 
-    public PostTools add(String key, Object value) {
+    public PostTools add(final String key, final Object value) {
         values.put(key, value);
         return this;
     }
@@ -63,10 +64,10 @@ public class PostTools {
      * @return
      * @throws MovieDbException
      */
-    private String convertToJson(Map<String, ?> map) throws MovieDbException {
+    private String convertToJson(final Map<String, ?> map) throws MovieDbException {
         try {
             return MAPPER.writeValueAsString(map);
-        } catch (JsonProcessingException ex) {
+        } catch (final JsonProcessingException ex) {
             throw new MovieDbException(ApiExceptionType.MAPPING_FAILED, "JSON conversion failed", "", ex);
         }
     }

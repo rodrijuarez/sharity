@@ -24,11 +24,11 @@ public class FileUpload {
     /**
      * @param name The name to set.
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
-    public void setFile(byte[] file) {
+    public void setFile(final byte[] file) {
         this.file = file;
     }
 

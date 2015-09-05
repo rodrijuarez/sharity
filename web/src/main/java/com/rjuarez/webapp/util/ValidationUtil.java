@@ -29,10 +29,10 @@ public class ValidationUtil {
      * @param field
      * @param errors
      */
-    public static boolean validateTwoFields(Object bean, ValidatorAction va, Field field, Errors errors) {
-        String value = ValidatorUtils.getValueAsString(bean, field.getProperty());
-        String secondProperty = field.getVarValue("secondProperty");
-        String value2 = ValidatorUtils.getValueAsString(bean, secondProperty);
+    public static boolean validateTwoFields(final Object bean, final ValidatorAction va, final Field field, final Errors errors) {
+        final String value = ValidatorUtils.getValueAsString(bean, field.getProperty());
+        final String secondProperty = field.getVarValue("secondProperty");
+        final String value2 = ValidatorUtils.getValueAsString(bean, secondProperty);
 
         if (!GenericValidator.isBlankOrNull(value)) {
             try {
@@ -40,7 +40,7 @@ public class ValidationUtil {
                     FieldChecks.rejectValue(errors, field, va);
                     return false;
                 }
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 FieldChecks.rejectValue(errors, field, va);
                 return false;
             }

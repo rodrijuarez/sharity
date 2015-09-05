@@ -1,11 +1,11 @@
 package com.rjuarez.webapp.util;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Convenience class for setting and retrieving cookies.
@@ -34,7 +34,7 @@ public final class RequestUtil {
      * @param path
      *            the path to set it on
      */
-    public static void setCookie(HttpServletResponse response, String name, String value, String path) {
+    public static void setCookie(final HttpServletResponse response, final String name, final String value, final String path) {
         if (log.isDebugEnabled()) {
             log.debug("Setting cookie '" + name + "' on path '" + path + "'");
         }
@@ -58,8 +58,8 @@ public final class RequestUtil {
      *
      * @return the cookie (if found), null if not found
      */
-    public static Cookie getCookie(HttpServletRequest request, String name) {
-        Cookie[] cookies = request.getCookies();
+    public static Cookie getCookie(final HttpServletRequest request, final String name) {
+        final Cookie[] cookies = request.getCookies();
         Cookie returnCookie = null;
 
         if (cookies == null) {
@@ -86,7 +86,7 @@ public final class RequestUtil {
      * @param path
      *            the path on which the cookie was set (i.e. /appfuse)
      */
-    public static void deleteCookie(HttpServletResponse response, Cookie cookie, String path) {
+    public static void deleteCookie(final HttpServletResponse response, final Cookie cookie, final String path) {
         if (cookie != null) {
             // Delete the cookie by setting its maximum age to zero
             cookie.setMaxAge(0);
@@ -103,17 +103,17 @@ public final class RequestUtil {
      *            the current request
      * @return URL to application
      */
-    public static String getAppUrl(HttpServletRequest request) {
+    public static String getAppUrl(final HttpServletRequest request) {
         if (request == null) {
             return "";
         }
 
-        StringBuffer url = new StringBuffer();
+        final StringBuffer url = new StringBuffer();
         int port = request.getServerPort();
         if (port < 0) {
             port = 80; // Work around java.net.URL bug
         }
-        String scheme = request.getScheme();
+        final String scheme = request.getScheme();
         url.append(scheme);
         url.append("://");
         url.append(request.getServerName());

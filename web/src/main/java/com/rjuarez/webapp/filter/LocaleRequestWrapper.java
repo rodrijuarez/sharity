@@ -47,7 +47,7 @@ public class LocaleRequestWrapper extends HttpServletRequestWrapper {
      */
     public Enumeration<Locale> getLocales() {
         if (null != preferredLocale) {
-            List<Locale> locales = Collections.list(super.getLocales());
+            final List<Locale> locales = Collections.list(super.getLocales());
             if (locales.contains(preferredLocale)) {
                 locales.remove(preferredLocale);
             }

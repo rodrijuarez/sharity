@@ -53,15 +53,16 @@ public class ValidatorExtensionPostProcessor implements BeanFactoryPostProcessor
      * @param configurableListableBeanFactory
      *            the bean factory
      */
+    @Override
     @SuppressWarnings("unchecked")
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) {
+    public void postProcessBeanFactory(final ConfigurableListableBeanFactory configurableListableBeanFactory) {
         if (configurableListableBeanFactory.containsBean(validatorFactoryBeanName)) {
-            BeanDefinition validatorFactoryBeanDefinition = configurableListableBeanFactory.getBeanDefinition(validatorFactoryBeanName);
-            MutablePropertyValues propertyValues = validatorFactoryBeanDefinition.getPropertyValues();
-            PropertyValue propertyValue = propertyValues.getPropertyValue("validationConfigLocations");
+            final BeanDefinition validatorFactoryBeanDefinition = configurableListableBeanFactory.getBeanDefinition(validatorFactoryBeanName);
+            final MutablePropertyValues propertyValues = validatorFactoryBeanDefinition.getPropertyValues();
+            final PropertyValue propertyValue = propertyValues.getPropertyValue("validationConfigLocations");
 
             // value is expected to be a list.
-            List<Map<String, Object[]>> existingValidationConfigLocations = (List<Map<String, Object[]>>) propertyValue.getValue();
+            final List<Map<String, Object[]>> existingValidationConfigLocations = (List<Map<String, Object[]>>) propertyValue.getValue();
             existingValidationConfigLocations.addAll(validationConfigLocations);
         }
     }
@@ -73,7 +74,7 @@ public class ValidatorExtensionPostProcessor implements BeanFactoryPostProcessor
      * @param validatorFactoryBeanName
      *            The validator factory bean name.
      */
-    public void setValidatorFactoryBeanName(String validatorFactoryBeanName) {
+    public void setValidatorFactoryBeanName(final String validatorFactoryBeanName) {
         this.validatorFactoryBeanName = validatorFactoryBeanName;
     }
 
@@ -84,7 +85,7 @@ public class ValidatorExtensionPostProcessor implements BeanFactoryPostProcessor
      * @param validationConfigLocations
      *            The list of additional validation configuration locations.
      */
-    public void setValidationConfigLocations(List<Map<String, Object[]>> validationConfigLocations) {
+    public void setValidationConfigLocations(final List<Map<String, Object[]>> validationConfigLocations) {
         this.validationConfigLocations = validationConfigLocations;
     }
 }

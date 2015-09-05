@@ -1,16 +1,17 @@
 package com.rjuarez.webapp.taglib;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.appfuse.Constants;
-
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.TagSupport;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.TagSupport;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.appfuse.Constants;
 
 /**
  * <p>
@@ -74,7 +75,7 @@ public class ConstantsTag extends TagSupport {
 
         try {
             classInstance = Class.forName(clazz);
-        } catch (ClassNotFoundException cnf) {
+        } catch (final ClassNotFoundException cnf) {
             log.error("ClassNotFound - maybe a typo?");
             throw new JspException(cnf.getMessage());
         }
@@ -82,23 +83,23 @@ public class ConstantsTag extends TagSupport {
         try {
             // if var is null, expose all variables
             if (var == null) {
-                Field[] fields = classInstance.getDeclaredFields();
+                final Field[] fields = classInstance.getDeclaredFields();
 
                 AccessibleObject.setAccessible(fields, true);
 
-                for (Field field : fields) {
+                for (final Field field : fields) {
                     pageContext.setAttribute(field.getName(), field.get(this), toScope);
                 }
             } else {
                 try {
-                    Object value = classInstance.getField(var).get(this);
+                    final Object value = classInstance.getField(var).get(this);
                     pageContext.setAttribute(classInstance.getField(var).getName(), value, toScope);
-                } catch (NoSuchFieldException nsf) {
+                } catch (final NoSuchFieldException nsf) {
                     log.error(nsf.getMessage());
                     throw new JspException(nsf);
                 }
             }
-        } catch (IllegalAccessException iae) {
+        } catch (final IllegalAccessException iae) {
             log.error("Illegal Access Exception - maybe a classloader issue?");
             throw new JspException(iae);
         }
@@ -107,7 +108,7 @@ public class ConstantsTag extends TagSupport {
         return (SKIP_BODY);
     }
 
-    public void setClassName(String clazz) {
+    public void setClassName(final String clazz) {
         this.clazz = clazz;
     }
 
@@ -115,7 +116,7 @@ public class ConstantsTag extends TagSupport {
         return this.clazz;
     }
 
-    public void setScope(String scope) {
+    public void setScope(final String scope) {
         this.scope = scope;
     }
 
@@ -123,7 +124,7 @@ public class ConstantsTag extends TagSupport {
         return (this.scope);
     }
 
-    public void setVar(String var) {
+    public void setVar(final String var) {
         this.var = var;
     }
 
@@ -134,6 +135,7 @@ public class ConstantsTag extends TagSupport {
     /**
      * Release all allocated resources.
      */
+    @Override
     public void release() {
         super.release();
         clazz = null;
@@ -168,8 +170,8 @@ public class ConstantsTag extends TagSupport {
      * @throws JspException
      *             if the scopeName is not a valid name.
      */
-    public int getScope(String scopeName) throws JspException {
-        Integer scope = (Integer) SCOPES.get(scopeName.toLowerCase());
+    public int getScope(final String scopeName) throws JspException {
+        final Integer scope = SCOPES.get(scopeName.toLowerCase());
 
         if (scope == null) {
             throw new JspException("Scope '" + scopeName + "' not a valid option");

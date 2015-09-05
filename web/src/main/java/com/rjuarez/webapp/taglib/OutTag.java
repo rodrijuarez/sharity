@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.rjuarez.webapp.taglib;
 
 import javax.servlet.jsp.tagext.TagSupport;
-import com.rjuarez.webapp.jsp.EscapeXmlExpressionLanguageResolver;
+import com.rjuarez.webapp.jsp.EscapeXmlELResolver;
 
 /**
  * Tag surrounds JSP code in which EL expressions should not be XML-escaped.
@@ -48,14 +48,14 @@ public class OutTag extends TagSupport {
     @Override
     public int doStartTag() {
         pageContext.setAttribute(
-                EscapeXmlExpressionLanguageResolver.ESCAPE_XML_ATTRIBUTE, escapeXml);
+                EscapeXmlELResolver.ESCAPE_XML_ATTRIBUTE, escapeXml);
         return EVAL_BODY_INCLUDE;
     }
     
     @Override
     public int doEndTag() {
         pageContext.setAttribute(
-                EscapeXmlExpressionLanguageResolver.ESCAPE_XML_ATTRIBUTE, ESCAPE_XML_DEFAULT);
+                EscapeXmlELResolver.ESCAPE_XML_ATTRIBUTE, ESCAPE_XML_DEFAULT);
         return EVAL_PAGE;
     }
     

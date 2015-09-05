@@ -27,17 +27,11 @@ package com.rjuarez.webapp.tools;
  */
 public enum PostBody {
 
-    MEDIA_ID("media_id"),
-    MEDIA_TYPE("media_type"),
-    FAVORITE("favorite"),
-    WATCHLIST("watchlist"),
-    NAME("name"),
-    DESCRIPTION("description"),
-    VALUE("value");
+    MEDIA_ID("media_id"), MEDIA_TYPE("media_type"), FAVORITE("favorite"), WATCHLIST("watchlist"), NAME("name"), DESCRIPTION("description"), VALUE("value");
 
     private final String value;
 
-    private PostBody(String value) {
+    private PostBody(final String value) {
         this.value = value;
     }
 

@@ -42,7 +42,7 @@ public class FileUploadController extends BaseFormController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String onSubmit(FileUpload fileUpload, BindingResult errors, HttpServletRequest request)
+    public String onSubmit(final FileUpload fileUpload, final BindingResult errors, final HttpServletRequest request)
             throws Exception {
 
         if (request.getParameter("cancel") != null) {
@@ -59,15 +59,15 @@ public class FileUploadController extends BaseFormController {
 
         // validate a file was entered
         if (fileUpload.getFile().length == 0) {
-            Object[] args =
+            final Object[] args =
                     new Object[]{getText("uploadForm.file", request.getLocale())};
             errors.rejectValue("file", "errors.required", args, "File");
 
             return "fileupload";
         }
 
-        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-        CommonsMultipartFile file = (CommonsMultipartFile) multipartRequest.getFile("file");
+        final MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        final CommonsMultipartFile file = (CommonsMultipartFile) multipartRequest.getFile("file");
 
         // the directory to upload to
         String uploadDir = getServletContext().getRealPath("/resources");
@@ -79,19 +79,19 @@ public class FileUploadController extends BaseFormController {
         uploadDir += "/" + request.getRemoteUser() + "/";
 
         // Create the directory if it doesn't exist
-        File dirPath = new File(uploadDir);
+        final File dirPath = new File(uploadDir);
 
         if (!dirPath.exists()) {
             dirPath.mkdirs();
         }
 
         //retrieve the file data
-        InputStream stream = file.getInputStream();
+        final InputStream stream = file.getInputStream();
 
         //write the file to the file specified
-        OutputStream bos = new FileOutputStream(uploadDir + file.getOriginalFilename());
+        final OutputStream bos = new FileOutputStream(uploadDir + file.getOriginalFilename());
         int bytesRead;
-        byte[] buffer = new byte[BYTES_FOR_BUFFER];
+        final byte[] buffer = new byte[BYTES_FOR_BUFFER];
 
         while ((bytesRead = stream.read(buffer, 0, BYTES_FOR_BUFFER)) != -1) {
             bos.write(buffer, 0, bytesRead);
@@ -109,7 +109,7 @@ public class FileUploadController extends BaseFormController {
         request.setAttribute("size", file.getSize() + " bytes");
         request.setAttribute("location", dirPath.getAbsolutePath() + Constants.FILE_SEP + file.getOriginalFilename());
 
-        String link = request.getContextPath() + "/resources" + "/" + request.getRemoteUser() + "/";
+        final String link = request.getContextPath() + "/resources" + "/" + request.getRemoteUser() + "/";
         request.setAttribute("link", link + file.getOriginalFilename());
 
         return getSuccessView();

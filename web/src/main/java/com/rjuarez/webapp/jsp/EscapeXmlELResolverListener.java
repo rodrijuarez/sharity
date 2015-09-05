@@ -32,18 +32,18 @@ import javax.servlet.jsp.JspFactory;
 /**
  * Registers ELResolver that escapes XML in EL expression String values.
  */
-public class EscapeXmlExpressionLanguageResolverListener implements ServletContextListener {
+public class EscapeXmlELResolverListener implements ServletContextListener {
 
-    public void contextInitialized(ServletContextEvent event) {
+    public void contextInitialized(final ServletContextEvent event) {
         // APF-1379: Prevent NPE when using Tomcat Maven Plugin
         try {
             Class.forName("org.apache.jasper.compiler.JspRuntimeContext");
-        } catch (ClassNotFoundException cnfe) {
+        } catch (final ClassNotFoundException cnfe) {
             // ignore
         }
-        JspFactory.getDefaultFactory().getJspApplicationContext(event.getServletContext()).addELResolver(new EscapeXmlExpressionLanguageResolver());
+        JspFactory.getDefaultFactory().getJspApplicationContext(event.getServletContext()).addELResolver(new EscapeXmlELResolver());
     }
 
-    public void contextDestroyed(ServletContextEvent event) {
+    public void contextDestroyed(final ServletContextEvent event) {
     }
 }

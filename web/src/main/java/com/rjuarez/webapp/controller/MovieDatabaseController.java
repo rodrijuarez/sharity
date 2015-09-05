@@ -40,8 +40,8 @@ public class MovieDatabaseController {
         final TheMovieDatabaseParameters parameters = new TheMovieDatabaseParameters();
         parameters.add(TheMovieDatabaseQueries.QUERY, "Fight club");
 
-        URL url = new ApiUrl(messages.getMessage(API_KEY), TheMovieDatabaseMethod.SEARCH).subMethod(MethodSub.MOVIE).buildUrl(parameters);
-        String webpage = httpTools.getRequest(url);
+        final URL url = new ApiUrl(messages.getMessage(API_KEY), TheMovieDatabaseMethod.SEARCH).subMethod(MethodSub.MOVIE).buildUrl(parameters);
+        final String webpage = httpTools.getRequest(url);
         return new ModelAndView("admin/userList");
     }
 }

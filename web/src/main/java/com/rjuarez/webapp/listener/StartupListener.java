@@ -45,10 +45,10 @@ public class StartupListener implements ServletContextListener {
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    public void contextInitialized(ServletContextEvent event) {
+    public void contextInitialized(final ServletContextEvent event) {
         log.debug("Initializing context...");
 
-        ServletContext context = event.getServletContext();
+        final ServletContext context = event.getServletContext();
 
         // Orion starts Servlets before Listeners, so check if the config
         // object already exists
@@ -58,20 +58,20 @@ public class StartupListener implements ServletContextListener {
             config = new HashMap<>();
         }
 
-        ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(context);
+        final ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(context);
 
         PasswordEncoder passwordEncoder = null;
         try {
-            ProviderManager provider = (ProviderManager) ctx.getBean("org.springframework.security.authentication.ProviderManager#0");
+            final ProviderManager provider = (ProviderManager) ctx.getBean("org.springframework.security.authentication.ProviderManager#0");
             for (Object o : provider.getProviders()) {
-                AuthenticationProvider authProvider = (AuthenticationProvider) o;
+                final AuthenticationProvider authProvider = (AuthenticationProvider) o;
                 if (authProvider instanceof RememberMeAuthenticationProvider) {
                     config.put("rememberMeEnabled", Boolean.TRUE);
                 } else if (ctx.getBean("passwordEncoder") != null) {
                     passwordEncoder = (PasswordEncoder) ctx.getBean("passwordEncoder");
                 }
             }
-        } catch (NoSuchBeanDefinitionException n) {
+        } catch (final NoSuchBeanDefinitionException n) {
             log.debug("authenticationManager bean not found, assuming test and ignoring...");
             // ignore, should only happen when testing
         }
@@ -92,16 +92,16 @@ public class StartupListener implements ServletContextListener {
         // Determine version number for CSS and JS Assets
         String appVersion = null;
         try {
-            InputStream is = context.getResourceAsStream("/META-INF/MANIFEST.MF");
+            final InputStream is = context.getResourceAsStream("/META-INF/MANIFEST.MF");
             if (is == null) {
                 log.warn("META-INF/MANIFEST.MF not found.");
             } else {
-                Manifest mf = new Manifest();
+                final Manifest mf = new Manifest();
                 mf.read(is);
-                Attributes atts = mf.getMainAttributes();
+                final Attributes atts = mf.getMainAttributes();
                 appVersion = atts.getValue("Implementation-Version");
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             log.error("I/O Exception reading manifest: " + e.getMessage());
         }
 
@@ -124,21 +124,21 @@ public class StartupListener implements ServletContextListener {
      * @param context
      *            The servlet context
      */
-    public static void setupContext(ServletContext context) {
-        ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(context);
-        LookupManager mgr = (LookupManager) ctx.getBean("lookupManager");
+    public static void setupContext(final ServletContext context) {
+        final ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(context);
+        final LookupManager mgr = (LookupManager) ctx.getBean("lookupManager");
 
         // get list of possible roles
         context.setAttribute(Constants.AVAILABLE_ROLES, mgr.getAllRoles());
         log.debug("Drop-down initialization complete [OK]");
 
         // Any manager extending GenericManager will do:
-        GenericManager<?, ?> manager = (GenericManager<?, ?>) ctx.getBean("userManager");
+        final GenericManager<?, ?> manager = (GenericManager<?, ?>) ctx.getBean("userManager");
         doReindexing(manager);
         log.debug("Full text search reindexing complete [OK]");
     }
 
-    private static void doReindexing(GenericManager<?, ?> manager) {
+    private static void doReindexing(final GenericManager<?, ?> manager) {
         manager.reindexAll(false);
     }
 
@@ -148,7 +148,7 @@ public class StartupListener implements ServletContextListener {
      * @param servletContextEvent
      *            The servlet context event
      */
-    public void contextDestroyed(ServletContextEvent servletContextEvent) {
+    public void contextDestroyed(final ServletContextEvent servletContextEvent) {
         // LogFactory.release(Thread.currentThread().getContextClassLoader());
         // Commented out the above call to avoid warning when SLF4J in
         // classpath.

@@ -28,25 +28,25 @@ public class LocaleFilter extends OncePerRequestFilter {
      * @throws IOException when something goes wrong
      * @throws ServletException when a communication failure happens
      */
-    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                                 FilterChain chain)
+    public void doFilterInternal(HttpServletRequest request, final HttpServletResponse response,
+                                 final FilterChain chain)
             throws IOException, ServletException {
 
-        String locale = request.getParameter("locale");
+        final String locale = request.getParameter("locale");
         Locale preferredLocale = null;
 
         if (locale != null) {
-            int indexOfUnderscore = locale.indexOf('_');
+            final int indexOfUnderscore = locale.indexOf('_');
             if (indexOfUnderscore != -1) {
-                String language = locale.substring(0, indexOfUnderscore);
-                String country = locale.substring(indexOfUnderscore + 1);
+                final String language = locale.substring(0, indexOfUnderscore);
+                final String country = locale.substring(indexOfUnderscore + 1);
                 preferredLocale = new Locale(language, country);
             } else {
                 preferredLocale = new Locale(locale);
             }
         }
 
-        HttpSession session = request.getSession(false);
+        final HttpSession session = request.getSession(false);
 
         if (session != null) {
             if (preferredLocale == null) {

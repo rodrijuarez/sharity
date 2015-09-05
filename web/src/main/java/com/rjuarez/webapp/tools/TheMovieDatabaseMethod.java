@@ -21,18 +21,19 @@
 package com.rjuarez.webapp.tools;
 
 import java.util.EnumSet;
+
 import org.apache.commons.lang3.StringUtils;
 
 public enum TheMovieDatabaseMethod {
 
     ACCOUNT("account"), AUTH("authentication"), CERTIFICATION("certification"), COLLECTION("collection"), COMPANY("company"), CONFIGURATION(
-            "configuration"), CREDIT("credit"), DISCOVER("discover"), EPISODE("episode"), FIND("find"), GENRE("genre"), GUEST_SESSION(
-                    "guest_session"), JOB("job"), KEYWORD("keyword"), LIST("list"), MOVIE("movie"), NETWORK("network"), PERSON("person"), REVIEW(
-                            "review"), SEARCH("search"), SEASON("season"), TIMEZONES("timezones"), TV("tv");
+            "configuration"), CREDIT("credit"), DISCOVER("discover"), EPISODE("episode"), FIND("find"), GENRE("genre"), GUEST_SESSION("guest_session"), JOB(
+                    "job"), KEYWORD("keyword"), LIST("list"), MOVIE("movie"), NETWORK("network"), PERSON("person"), REVIEW("review"), SEARCH("search"), SEASON(
+                            "season"), TIMEZONES("timezones"), TV("tv");
 
     private final String value;
 
-    private TheMovieDatabaseMethod(String value) {
+    private TheMovieDatabaseMethod(final String value) {
         this.value = value;
     }
 
@@ -51,7 +52,7 @@ public enum TheMovieDatabaseMethod {
      * @param value
      * @return
      */
-    public static TheMovieDatabaseMethod fromString(String value) {
+    public static TheMovieDatabaseMethod fromString(final String value) {
         if (StringUtils.isNotBlank(value)) {
             for (final TheMovieDatabaseMethod method : EnumSet.allOf(TheMovieDatabaseMethod.class)) {
                 if (value.equalsIgnoreCase(method.value)) {

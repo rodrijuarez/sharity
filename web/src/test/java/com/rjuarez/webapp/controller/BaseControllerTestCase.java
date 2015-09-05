@@ -1,5 +1,8 @@
 package com.rjuarez.webapp.controller;
 
+import java.net.BindException;
+import java.util.Random;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
@@ -10,20 +13,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.subethamail.wiser.Wiser;
 
-import java.net.BindException;
-import java.util.Random;
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {
-    "classpath:/applicationContext-resources.xml",
-    "classpath:/applicationContext-dao.xml",
-    "classpath:/applicationContext-service.xml",
-    "classpath*:/applicationContext.xml", // for modular archetypes
-    "/WEB-INF/applicationContext*.xml",
-    "/WEB-INF/dispatcher-servlet.xml"
-})
+@ContextConfiguration(locations = { "classpath:/applicationContext-resources.xml", "classpath:/applicationContext-dao.xml",
+        "classpath:/applicationContext-service.xml", "classpath*:/applicationContext.xml", // for
+                                                                                           // modular
+                                                                                           // archetypes
+        "/WEB-INF/applicationContext*.xml", "/WEB-INF/dispatcher-servlet.xml" })
 public abstract class BaseControllerTestCase {
-    protected transient final Log log = LogFactory.getLog(getClass());
+    protected final transient Log log = LogFactory.getLog(getClass());
     private int smtpPort;
 
     @Autowired
@@ -39,14 +36,14 @@ public abstract class BaseControllerTestCase {
         return smtpPort;
     }
 
-    protected Wiser startWiser(int smtpPort) {
-        Wiser wiser = new Wiser();
+    protected Wiser startWiser(final int smtpPort) {
+        final Wiser wiser = new Wiser();
         wiser.setPort(smtpPort);
         try {
             wiser.start();
-        } catch (RuntimeException re) {
+        } catch (final RuntimeException re) {
             if (re.getCause() instanceof BindException) {
-                int nextPort = smtpPort + 1;
+                final int nextPort = smtpPort + 1;
                 if (nextPort - smtpPort > 10) {
                     log.error("Exceeded 10 attempts to start SMTP server, aborting...");
                     throw re;
