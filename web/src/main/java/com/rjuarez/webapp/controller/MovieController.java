@@ -2,12 +2,14 @@ package com.rjuarez.webapp.controller;
 
 import java.net.URL;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.yamj.api.common.http.SimpleHttpClientBuilder;
 
 import com.rjuarez.webapp.tools.ApiUrl;
@@ -25,16 +27,22 @@ public class MovieController {
 
     private MessageSourceAccessor messages;
 
+    @Autowired
+    public void setMessages(final MessageSource apiSource) {
+        messages = new MessageSourceAccessor(apiSource);
+    }
+
     // The HttpTools to use
     protected final HttpTools httpTools = new HttpTools(new SimpleHttpClientBuilder().build());
 
-    @RequestMapping(value = "/searchq?q=*", method = RequestMethod.GET)
-    public ModelAndView getMovies(@RequestParam(required = false, value = "q") final String query) throws Exception {
+    @ResponseBody
+    @RequestMapping(value = "/search*", method = RequestMethod.GET)
+    public String getMovies(@RequestParam(required = false, value = "q") final String query) throws Exception {
         final TheMovieDatabaseParameters parameters = new TheMovieDatabaseParameters();
         parameters.add(TheMovieDatabaseQueries.QUERY, "Fight club");
 
         final URL url = new ApiUrl(messages.getMessage(API_KEY), TheMovieDatabaseMethod.SEARCH).subMethod(MethodSub.MOVIE).buildUrl(parameters);
         final String webpage = httpTools.getRequest(url);
-        return new ModelAndView("admin/userList");
+        return "hi";
     }
 }

@@ -9,10 +9,11 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="input-group">
-                        <input type="text" class="form-control">
-                        <span class="input-group-btn">
+                        <input type="text" id="movieName"
+                            class="form-control"> <span
+                            class="input-group-btn">
                             <button class="btn btn-default"
-                                type="button">
+                                type="button" id="buscar">
                                 <fmt:message key="button.buscar" />
                             </button>
                         </span>
@@ -24,3 +25,16 @@
 </div>
 <c:set var="scripts" scope="request">
 </c:set>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#buscar").click(function() {
+            movieName = $("#movieName").val();
+            $.ajax({
+                url : "${ctx}/movie/search?q=" + movieName,
+                method : "GET"
+            }).done(function() {
+                $(this).addClass("done");
+            });
+        });
+    });
+</script>
