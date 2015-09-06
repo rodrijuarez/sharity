@@ -9,39 +9,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="<c:url value="/images/favicon.ico"/>" />
 <title><decorator:title /> | <fmt:message key="webapp.name" /></title>
-<link rel="stylesheet"
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="${ctx}/styles/style.css">
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/script.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/jquery.cookie.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/jquery-2.1.4.js"></script>
 <decorator:head />
 </head>
-<body
-    <decorator:getProperty property="body.id" writeEntireProperty="true"/>
-    <decorator:getProperty property="body.class" writeEntireProperty="true"/>>
+<body <decorator:getProperty property="body.id" writeEntireProperty="true"/> <decorator:getProperty property="body.class" writeEntireProperty="true"/>>
     <c:set var="currentMenu" scope="request">
         <decorator:getProperty property="meta.menu" />
     </c:set>
 
-    <div class="navbar navbar-default navbar-fixed-top"
-        role="navigation">
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle"
-                data-toggle="collapse" data-target="#navbar">
-                <span class="icon-bar"></span> <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<c:url value='/'/>"><fmt:message
-                    key="webapp.name" /></a>
+            <a class="navbar-brand" href="<c:url value='/'/>"><fmt:message key="webapp.name" /></a>
         </div>
 
         <%@ include file="/common/menu.jsp"%>
         <c:if test="${pageContext.request.locale.language eq 'es'}">
             <div id="switchLocale">
-                <a href="<c:url value='/?locale=en'/>"> <fmt:message
-                        key="webapp.name" /> in English
+                <a href="<c:url value='/?locale=en'/>"> <fmt:message key="webapp.name" /> in English
                 </a>
             </div>
         </c:if>
@@ -54,9 +47,7 @@
 
             <c:if test="${currentMenu == 'AdminMenu'}">
                 <div class="col-sm-2">
-                    <menu:useMenuDisplayer name="Velocity"
-                        config="navlistMenu.vm"
-                        permissions="rolesAdapter">
+                    <menu:useMenuDisplayer name="Velocity" config="navlistMenu.vm" permissions="rolesAdapter">
                         <menu:displayMenu name="AdminMenu" />
                     </menu:useMenuDisplayer>
                 </div>
@@ -65,13 +56,9 @@
     </div>
 
     <div id="footer" class="container navbar-fixed-bottom">
-        <span class="col-sm-6 text-left"><fmt:message
-                key="webapp.version" /> <c:if
-                test="${pageContext.request.remoteUser != null}">
+        <span class="col-sm-6 text-left"><fmt:message key="webapp.version" /> <c:if test="${pageContext.request.remoteUser != null}">
             | <fmt:message key="user.status" /> ${pageContext.request.remoteUser}
-            </c:if> </span> <span class="col-sm-6 text-right"> &copy; <fmt:message
-                key="copyright.year" /> <a
-            href="<fmt:message key="company.url"/>"><fmt:message
+            </c:if> </span> <span class="col-sm-6 text-right"> &copy; <fmt:message key="copyright.year" /> <a href="<fmt:message key="company.url"/>"><fmt:message
                     key="company.name" /></a>
         </span>
     </div>

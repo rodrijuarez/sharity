@@ -3,38 +3,43 @@
 <head>
 <title><fmt:message key="movies.title" /></title>
 </head>
-<div class="starter-template">
-    <div class="row">
-        <div class="well">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="input-group">
-                        <input type="text" id="movieName"
-                            class="form-control"> <span
-                            class="input-group-btn">
-                            <button class="btn btn-default"
-                                type="button" id="buscar">
-                                <fmt:message key="button.buscar" />
-                            </button>
-                        </span>
+<div ng-app="moviesForm" ng-controller="movieController">
+    <div class="starter-template">
+        <div class="row">
+            <div class="well">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="input-group">
+                            <input type="text" ng-model="movieName" class="form-control"> <span class="input-group-btn">
+                                <button class="btn btn-default" ng-click="getMovies()">
+                                    <fmt:message key="button.buscar" />
+                                </button>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <table ng-table>
+            <tr ng-repeat="movie in results">
+                <td>{{ movie.title }}</td>
+            </tr>
+        </table>
+        <c:set var="scripts" scope="request">
+        </c:set>
     </div>
 </div>
-<c:set var="scripts" scope="request">
-</c:set>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $("#buscar").click(function() {
-            movieName = $("#movieName").val();
+    var app = angular.module('moviesForm', []);
+    app.controller('movieController', function($scope) {
+        $scope.getMovies = function() {
+            movieName = $scope.movieName;
             $.ajax({
                 url : "${ctx}/movie/search?q=" + movieName,
                 method : "GET"
-            }).done(function() {
-                $(this).addClass("done");
+            }).done(function(data) {
+                $scope.results = data.results;
             });
-        });
+        };
     });
 </script>
