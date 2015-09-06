@@ -22,7 +22,17 @@
         </div>
         <table ng-table>
             <tr ng-repeat="movie in results">
-                <td>{{ movie.title }}</td>
+                <td>
+                    <ul class="media-list">
+                        <li class="media">
+                            <div class="media-left">
+                                <a href="#"> <img class="media-object" ng-src="http://image.tmdb.org/t/p/w500/{{ movie.poster_path }}">
+                                </a>
+                            </div>
+                            <div class="media-body">{{ movie.title }}</div>
+                        </li>
+                    </ul>
+                </td>
             </tr>
         </table>
         <c:set var="scripts" scope="request">
