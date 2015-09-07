@@ -14,7 +14,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
  * Validator Factory bean, possibly defined within a seperate Spring
  * configuration file in a seperate jar file. By using this extension factory
  * developers can add validation configuration for their own persistent classes
- * to an AppFuse application without modifying any of the existing AppFuse
+ * to an Sharity application without modifying any of the existing Sharity
  * Spring configuration or jar distribution files.
  * 
  * As an example consider the following Spring bean configuration:
@@ -35,9 +35,9 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
  * validator extension is included in a Spring configuration file called
  * applicationContext-foo-validation.xml, and that this configuration file is
  * added directly below WEB-INF in the Foo web project, then the normal war
- * overlay process coupled with AppFuse's configuration file auto detection will
+ * overlay process coupled with Sharity's configuration file auto detection will
  * ensure that the validation extension is automatically included into the
- * application without requiring any modification of AppFuse's existing config
+ * application without requiring any modification of Sharity's existing config
  * files.
  *
  * @author Michael Horwitz

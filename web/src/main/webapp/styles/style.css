@@ -284,3 +284,41 @@ span.pagelinks {
 	border: 1px solid #CD0A0A;
 	color: #FFFFFF;
 }
+
+div.movieCard {
+	display: block;
+	overflow: auto;
+	background-color: #BAC1D3;
+	border: 1px solid;
+	margin-bottom: 5px;
+	padding-left: 0px;
+	float: none;
+	width: 100%;
+}
+
+div.movieCard div.media-list {
+	margin-bottom: 0px;
+}
+
+div.movieCard div.media-body {
+	margin-bottom: 0px;
+	width: auto;
+	float: none;
+}
+
+div.movieCard div.media-left {
+	float: none;
+	padding-left: 0px;
+}
+
+.media-list {
+	margin-bottom: 0px;
+}
+
+.navbar-right {
+	margin-right: 0px;
+}
+
+div.movieCard h4.media-heading {
+	margin-top: 10px;
+}
