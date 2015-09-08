@@ -10,14 +10,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 import java.util.Map;
 
-import org.appfuse.Constants;
-import org.appfuse.service.UserManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import com.rjuarez.common.Constants;
+import com.rjuarez.core.manager.UserManager;
 
 public class UserControllerTest extends BaseControllerTestCase {
     @Autowired
@@ -46,7 +47,8 @@ public class UserControllerTest extends BaseControllerTestCase {
         userManager.reindex();
 
         final Map<String, Object> model = mockMvc.perform((get("/admin/users")).param("q", "admin")).andExpect(status().isOk())
-                .andExpect(model().attributeExists(Constants.USER_LIST)).andExpect(view().name("admin/userList")).andReturn().getModelAndView().getModel();
+                .andExpect(model().attributeExists(Constants.USER_LIST)).andExpect(view().name("admin/userList")).andReturn().getModelAndView()
+                .getModel();
 
         final List<?> results = (List<?>) model.get(Constants.USER_LIST);
         assertNotNull(results);

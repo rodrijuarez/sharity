@@ -8,6 +8,6 @@
 			<param name="beanName" value="userManager" />
 			<include method="getUsers" />
 		</create>
-		<convert converter="bean" match="org.appfuse.model.User" />
+		<convert converter="bean" match="com.rjuarez.core.model.User" />
 	</allow>
 </dwr>

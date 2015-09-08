@@ -8,7 +8,6 @@ import java.util.Locale;
 
 import javax.servlet.jsp.jstl.core.Config;
 
-import org.appfuse.Constants;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -16,6 +15,8 @@ import org.springframework.mock.web.MockFilterConfig;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
+
+import com.rjuarez.common.Constants;
 
 public class LocaleFilterTest {
     private LocaleFilter filter;

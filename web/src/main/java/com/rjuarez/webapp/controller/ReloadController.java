@@ -1,19 +1,18 @@
 package com.rjuarez.webapp.controller;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import com.rjuarez.webapp.listener.StartupListener;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * This class is used to reload the drop-downs initialized in the
@@ -32,14 +31,12 @@ public class ReloadController {
 
     @RequestMapping(method = RequestMethod.GET)
     @SuppressWarnings("unchecked")
-    public ModelAndView handleRequest(final HttpServletRequest request,
-                                      final HttpServletResponse response)
-    throws Exception {
+    public ModelAndView handleRequest(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         if (log.isDebugEnabled()) {
             log.debug("Entering 'execute' method");
         }
 
-        StartupListener.setupContext(request.getSession().getServletContext());
+        // StartupListener.setupContext(request.getSession().getServletContext());
 
         final String referer = request.getHeader("Referer");
 
@@ -76,5 +73,5 @@ public class ReloadController {
 
         return null;
     }
-    
+
 }

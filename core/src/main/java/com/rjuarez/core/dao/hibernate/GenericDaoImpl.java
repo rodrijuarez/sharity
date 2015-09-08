@@ -5,17 +5,16 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import com.rjuarez.core.dao.GenericDao;
 
 @SuppressWarnings("unchecked")
-@Repository
 public abstract class GenericDaoImpl<E, K extends Serializable> implements GenericDao<E, K> {
-    @Autowired
+    @Resource
     private SessionFactory sessionFactory;
 
     protected Class<? extends E> type;
@@ -34,14 +33,20 @@ public abstract class GenericDaoImpl<E, K extends Serializable> implements Gener
     }
 
     protected Session currentSession() {
-        return sessionFactory.getCurrentSession();
+        Session session = this.sessionFactory.getCurrentSession();
+
+        if (session == null) {
+            session = this.sessionFactory.openSession();
+        }
+
+        return session;
     }
 
     @Override
     public void add(final E entity) {
         currentSession().save(entity);
     }
-
+    
     @Override
     public void saveOrUpdate(final E entity) {
         currentSession().saveOrUpdate(entity);

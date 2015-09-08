@@ -23,10 +23,10 @@ package com.rjuarez.webapp.tools;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.codehaus.jackson.JsonProcessingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.yamj.api.common.exception.ApiExceptionType;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rjuarez.webapp.moviedbapi.MovieDbException;
 
 /**

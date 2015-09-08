@@ -2,12 +2,16 @@ package com.rjuarez.core.model;
 
 import java.io.Serializable;
 
+import org.codehaus.jackson.annotate.JsonAnySetter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-
 public abstract class AbstractJsonMapping implements Serializable {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
     private static Logger getLogger(final Class<?> aClass) {
         return LoggerFactory.getLogger(aClass);

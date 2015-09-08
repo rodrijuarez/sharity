@@ -3,9 +3,14 @@ package com.rjuarez.core.model;
 import java.util.Iterator;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 public class ResultsPage<T> extends AbstractJsonMapping implements Iterable<T> {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
     @JsonProperty("results")
     private List<T> results;

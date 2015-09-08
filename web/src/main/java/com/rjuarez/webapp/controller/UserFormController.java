@@ -7,13 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.appfuse.Constants;
-import org.appfuse.model.Role;
-import org.appfuse.model.User;
-import org.appfuse.service.RoleManager;
-import org.appfuse.service.UserExistsException;
-import org.appfuse.service.UserManager;
-import com.rjuarez.webapp.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.security.access.AccessDeniedException;
@@ -24,6 +17,14 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.rjuarez.common.Constants;
+import com.rjuarez.core.manager.RoleManager;
+import com.rjuarez.core.manager.UserExistsException;
+import com.rjuarez.core.manager.UserManager;
+import com.rjuarez.core.model.Role;
+import com.rjuarez.core.model.User;
+import com.rjuarez.webapp.util.RequestUtil;
 
 /**
  * Implementation of <strong>SimpleFormController</strong> that interacts with

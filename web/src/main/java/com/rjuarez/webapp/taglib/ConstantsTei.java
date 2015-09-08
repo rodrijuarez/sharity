@@ -11,7 +11,8 @@ import javax.servlet.jsp.tagext.VariableInfo;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.appfuse.Constants;
+
+import com.rjuarez.common.Constants;
 
 /**
  * Implementation of <code>TagExtraInfo</code> for the <b>constants</b> tag,

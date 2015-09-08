@@ -8,8 +8,8 @@
   <property name="show_sql">true</property>
   <property name="format_sql">true</property>
   <!-- MODEL -->
-  <mapping class="org.appfuse.model.User" />
+  <mapping class="com.rjuarez.core.model.User" />
   <mapping class="com.rjuarez.core.model.Movie" />
-  <mapping class="org.appfuse.model.Role" />
+  <mapping class="com.rjuarez.core.model.Role" />
  </session-factory>
 </hibernate-configuration>

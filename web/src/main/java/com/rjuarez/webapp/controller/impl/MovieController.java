@@ -2,6 +2,7 @@ package com.rjuarez.webapp.controller.impl;
 
 import java.net.URL;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.yamj.api.common.http.SimpleHttpClientBuilder;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rjuarez.core.model.MovieResultsPage;
 import com.rjuarez.webapp.controller.IMovieController;
 import com.rjuarez.webapp.tools.ApiUrl;
